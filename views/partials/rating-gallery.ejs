@@ -1,0 +1,75 @@
+
+ <div>
+      <div class="rating" id="<%= artist.name %>">
+        
+        
+    <!-- Draw -->
+         <form class="rate" action="/rating" method="post">
+          
+        <fieldset>
+          <input class="form-control" type="hidden" name="artist_id" value="<%= artist.id %>">
+        </fieldset>
+        
+         <fieldset>
+          <input class="form-control" type="hidden" name="artist_name" value="<%= artist.name %>">
+        </fieldset> 
+        
+         <fieldset>
+          <input class="form-control" type="hidden" name="genre" value="<%= artist.genre %>">
+        </fieldset> 
+          
+       <!-- Score --> 
+        <fieldset>
+      
+        <div class="form-group rating-comment">
+        <% if (currentUser) { %>
+        
+        <label for="exampleFormControlTextarea1"></label>
+        <% } else { %> 
+
+        <label for="exampleFormControlTextarea1">Log-in to rate <%= artist.name %></label>
+        <% } %>
+        <% if (currentUser) { %>
+        <textarea name="comment" placeholder="Did you enjoy this artist, <%= currentUser.username %>?" class="form-control form-control rating-comment" id="exampleFormControlTextarea1" data-autosize-input='{ "space": 40 }' rows="1"></textarea>
+        <% } else { %>
+        <textarea name="comment" placeholder="Log-in to review this artist..." class="form-control form-control rating-comment" id="exampleFormControlTextarea1" data-autosize-input='{ "space": 40 }' rows="1"></textarea>
+        <% } %>
+        </div>
+      
+     
+      
+		    <div class="star-holder">
+	        <div class="rating-wrapper">
+          <input type="radio" class="rating-input" id="score1" name="score" value="5" />
+          <label for="score1" class="rating-star"></label>
+          <input type="radio" class="rating-input" id="score2" name="score" value="4" />
+          <label for="score2" class="rating-star"></label>
+          <input type="radio" class="rating-input" id="score3" name="score" value="3" />
+          <label for="score3" class="rating-star"></label>
+          <input type="radio" class="rating-input" id="score4" name="score" value="2" />
+          <label for="score4" class="rating-star"></label>
+          <input type="radio" class="rating-input" id="score5" name="score" value="1" />
+          <label for="score5" class="rating-star"></label>
+          </div>
+        </div>
+       </a>
+          <div class="btn-holder">
+            <input class="btn btn-secondary review-btn" type="submit" value="Submit">
+          </div>
+         </fieldset>
+        </form>
+        <!-- End user rating section -->
+      </div>
+     </div>
+      
+<script>
+
+$('textarea').on('keydown', function(e){
+    if(e.which == 13) {e.preventDefault();}
+}).on('input', function(){
+    $(this).height(1);
+    var totalHeight = $(this).prop('scrollHeight') - parseInt($(this).css('padding-top')) - parseInt($(this).css('padding-bottom'));
+    $(this).height(totalHeight);
+});
+      
+</script>

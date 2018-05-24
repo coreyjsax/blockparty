@@ -1,0 +1,101 @@
+<% include ../partials/head %>
+
+
+<script>
+    var objs = [];
+    function getRank(){
+       var html='';
+       fetch('https://block-party-coreyjsax.c9users.io/api/leaderboard')
+       .then(function(res){
+          data = JSON.parse(res);
+       }).then(function(data){
+           console.log(data[0]);
+           document.write("<table>");
+           for (var i = 0; i < data.length; i++) {
+               document.write("<tr>");
+               document.write("<td>"data[i].key"</td>");
+               document.write("</tr>")
+           }
+           
+           
+         /*  for (var i = 0; i < data.length; i++) {
+               
+               var score = 0;
+               for (var j = 0; j < data[i].values.length; j++) {
+                   score += data[i].values[j].score;
+                   
+               }
+               score = score/data[i].values.length;
+               score = (Math.round(score*4)/4).toFixed(2);
+           */   // objs.push({id: i+1, artist: data[i].key, genre: data[i].values[0].genre, score: score});
+            document.write("</table>");
+               
+           }
+           //return objs;
+     })//.then(function(objs){
+          // getTable();
+      // }) 
+    }
+   getRank();
+
+/* function getTable(){
+    var sortInfo = { key: "id", order: d3.descending };
+    var table = d3.select(".board").insert("table",":first-child")
+        .attr("id","NameList")
+        .attr("class","table table-dark table-hover leaderboard card-title")
+        
+    var thead = table.append("thead").attr("class","leaderboard-heading");
+    var tbody = table.append("tbody");
+
+thead.append("tr")
+  .selectAll("th")
+    .data(d3.entries(objs[0]))
+    .enter()
+    .append("th")
+    .on("click", function(d,i){createTableBody(d.key);})
+    .text(function(d){return d.key;})
+;
+createTableBody("id");
+
+function createTableBody(sortKey)
+{
+  if (sortInfo.order.toString() == d3.ascending.toString())
+    { sortInfo.order = d3.descending; }
+  else { sortInfo.order = d3.ascending; }
+  objs.sort(function(x,y){return sortInfo.order(x[sortKey], y[sortKey])});
+ 
+  tbody
+    .selectAll("tr")
+      .data(objs)
+      .enter()
+      .append("tr")
+    .selectAll("td")
+      .data(function(d){return d3.entries(d)})
+      .enter()
+      .append("td")
+      .text(function(d){return d.value;})
+    ;
+
+  tbody
+    .selectAll("tr")
+      .data(objs)
+    .selectAll("td")
+      .data(function(d){return d3.entries(d)})
+      .text(function(d){return d.value;})
+    ;
+}
+}
+ */   
+</script>
+
+<div class="leaderboard-wrap">
+<h4 class="header">
+    Artist Rating Leaderboard
+</h4>
+<div class="board">
+</div>
+</div>
+
+<% include ../partials/add-artist %>     
+<% include ../partials/footer %>
+<% include ../partials/scripts %>

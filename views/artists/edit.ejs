@@ -1,0 +1,51 @@
+<% include ../partials/head %>
+
+<div class="container">
+    <div class="row">
+        <img src="https://pizzaluce.com/assets/logo-16.png"width="50px">
+           <h4 style="text-align:center;">Edit <%= artist.name %></h4>
+           <div style="width: 30%; margin: 25px auto;">
+               <form action="/artists/<%= artist.id %>?_method=PUT" method="POST">
+                   <div class="field-group form-group">
+                       <div class="field controls ">
+                           <input id="name" class="" name="artist[name]" type="text"  value="<%= artist.name %>">
+                       </div>
+                   </div>
+                  <div class="field-group form-group">
+                     <div class="field autocomplete">
+                       <input id="myInput" type="text" name="artist[genre]" value="<%= artist.genre %>">
+                     </div>
+                  </div>
+                  <div class="field-group form-group">
+                     <div class="field">
+                       <input id="desc" type="text" name="artist[description]" value="<%= artist.description %>">
+                     </div>
+                 </div>
+                 <div class="field-group form-group">
+                     <div class="field">
+                        <input name="artist[video]" type="text"  value="<%= artist.video %>"><a id="yt" href="https://www.youtube.com/watch?v=liJVSwOiiwg">How to find Youtube video ID</a>
+                     </div>
+                 </div>
+       
+      <button type="submit">Submit!</button>
+         
+
+           
+         
+       
+        
+    
+    </form>
+              </div>
+       </div>
+    </div>
+</div>
+
+
+
+
+<% include ../partials/add-artist %>     
+<% include ../partials/scripts %>
+<% if (currentUser) { %>
+<% include ../partials/footer %>
+<% } %>

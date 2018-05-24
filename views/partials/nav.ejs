@@ -1,0 +1,143 @@
+
+
+<div class="menu-wrap">
+  <nav class="menu">
+    
+     <div role="separator" class="dropdown-divider"></div>
+         <h6 class="top=data" >Signed in as <%= currentUser.username %></h6>
+     
+    
+     <div role="separator" class="dropdown-divider"></div>
+      <a class="dropdown-item" href="/user/<%= currentUser.id %>/ratings">my reviews</a>
+      <a class="dropdown-item" href="/user/<%= currentUser.id %>/artists">my artists</a>
+      <div role="separator" class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#">settings</a>
+      <div role="separator" class="dropdown-divider"></div>
+      <h6 class="top-data">Artists you've rated <span id="topbadge" class="badge badge-danger"></span></h6>
+    <h6 class="top-data">Total artists submitted <span id="artbadge" class="badge badge-info"></span></h6>
+    <div role="separator" class="dropdown-divider"></div>
+      <a class="dropdown-item" href="/logout">logout</a>
+    <button class="close-button" id="close-button">X</button>
+  </nav>
+</div>
+<button class="menu-button fa fa-bars" id="open-button">
+</button>
+
+
+
+      
+      
+      
+      <% if(!currentUser) { %>
+      
+      <a href="" id="login" class="navbar"  data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span id="login">Login</span></a>
+      <a href=""  class="navbar" data-toggle="modal" data-target="#signup-form">Signup</a>
+      <% } else { %>
+      <a class="navbar"><span class="logger"></span></a>
+      
+      <% } %>
+  </nav>
+  
+  <div class="collapse" id="navbarToggleExternalContent">
+    <div class="bg-dark p-4">
+      <form action="/login" method="post">
+      <div class="form-group">
+        <input type="name" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="username">
+      </div>
+      <div class="form-group">
+        <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      </div>
+     <button type="submit" value="login!" class="btn btn-primary">Submit</button>
+</form>
+    </div>
+  </div>
+</div>
+
+ <div class="container flash-container">
+        <% if(error && error.length > 0){ %>
+        <div class="alert alert-danger alert-dismissible fade show flash" role="alert">
+        <%= error %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <% } %>
+      
+      <% if(success && success.length > 0){ %>
+        <div id="success-alert" class="alert alert-success alert-dismissible fade show flash" role="alert">
+        <%= success %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <% } %>
+      </div>
+      
+      
+    <script>
+     function getRateBadge(){
+      fetch('https://block-party-coreyjsax.c9users.io/api/users/<%= currentUser.id %>/inbox')
+      .then(function(res){
+        return res.json()
+      }).then(function(data){
+        var badgeNum = data.length;
+        console.log(badgeNum);
+        if(data.length > 0){
+          document.getElementById('rate-badge').innerText = badgeNum;
+        }
+        
+      });
+     }
+     getRateBadge();
+     
+     function getArtistBadge(){
+       fetch('https://block-party-coreyjsax.c9users.io/api/artists')
+       .then(function(res){
+         return res.json()
+       }).then(function(data){
+         var artBadge = data.length;
+         if(data.length > 0){
+           document.getElementById('art-badge').innerText = artBadge;
+         }
+         
+       });
+     }
+     getArtistBadge();
+     function getRatingBadge(){
+       fetch('https://block-party-coreyjsax.c9users.io/api/ratings')
+       .then(function(res){
+         return res.json()
+       }).then(function(data){
+         var ratingBadge = data.length;
+         if(data.length > 0){
+           document.getElementById('ratings-badge').innerText = ratingBadge;
+         }
+       })
+     }
+     getRatingBadge();
+     
+     (function($) {
+//  "use strict";
+  var openBtn = $("#open-button"),
+    colseBtn = $("#close-button"),
+    menu = $(".menu-wrap");
+  // Open menu when click on menu button
+  openBtn.on("click", function() {
+    menu.addClass("active");
+  });
+  // Close menu when click on Close button
+  colseBtn.on("click", function() {
+    menu.removeClass("active");
+  });
+  // Close menu when click on anywhere on the document
+  $(document).on("click", function(e) {
+    var target = $(e.target);
+    if (target.is(".menu-wrap, .menu, .icon-list, .icon-list a, .icon-list a span, #open-button") === false) {
+      menu.removeClass("active");
+      e.stopPropagation();
+    }
+  });
+})(jQuery);
+    </script>     
+     

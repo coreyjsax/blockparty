@@ -1,0 +1,117 @@
+<% include ../partials/head %>
+<% include ../partials/nav %>
+
+
+<div class="wrap">
+
+  <div class="container-fluid">
+    <h1 class="header">All Submitted Artists</h1>
+    <p class="subhead">All Artists submitted by registered users.</p>
+  </div>
+  <div class="container-fluid">
+   <div class="btn-group artist-btns" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-outline-info artist-btn">All Artists</button>
+  <button type="button" class="btn btn-outline-info artist-btn">Reviewed</button>
+  <button type="button" class="btn btn-outline-info artist-btn">Unreviewed</button>
+</div>
+  </div>
+<div class="card-columns">
+<!-- EJS JS goes here -->
+<% artists.forEach(function(artist){ %>
+  <!-- -->
+  <div class="card text-white bg-dark artist-card">
+    
+    <div class="side">
+      <div class="card-header">
+       <H4 id="" class="card-title"><%= artist.name %>&nbsp;&nbsp;
+        <span id="badge<%= artist.id %>" class="badge  badge-info">
+         <script>
+           function getRatings(){
+            var totalScore;
+            fetch('https://block-party-coreyjsax.c9users.io/api/artists/<%= artist.id %>/ratings')
+            .then(function(res){
+              return res.json()
+            }).then(
+                function(data) {
+                  var score = 0;
+                  for (i = 0; i < data.length; i++) {
+                   score += data[i].score;
+                }
+                score = score/data.length;
+                score = (Math.round(score*5)/5).toFixed(2);
+                var test = document.querySelector("#badge<%= artist.id %>");
+                if(isNaN(score) == false){
+                test.innerText = score;
+                } 
+            }).catch(function(err){
+              console.log(err)
+            });
+          }
+          getRatings();
+           var test = document.querySelector("#badge");
+           test.innerText = score;
+         </script>
+          </span></H4>
+      </div>
+      <div class="embed-responsive embed-responsive-4by3">
+        <!-- user should only need to enter youtube video id-->
+        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<%= artist.video %>?rel=0" allowfullscreen></iframe>
+      </div>
+      <div class="card-body">
+        <p class="card-text"><%= artist.description %></p>
+      </div>
+      
+      <% if (currentUser) { %>
+  <!-- Check if user already left review -->  
+        
+
+      
+  <!-- This is the rating section -->
+      <% include ../partials/rating-gallery %>
+      <% } else { %>
+      <!-- If user not logged in -->
+      <div class="warning collapse" id="<%= artist.name %>">
+        <h6>You must be logged in to rate or submit new artists!</h6>
+      </div>
+     <% } %> 
+      <div class="card-footer  text-muted rating-date">
+        
+        <% // date formatting for mongoose date
+    var monthNames = [
+      "Jan", "Feb", "Mar",
+      "Apr", "May", "Jun", "Jul",
+      "Aug", "Sept", "Oct",
+      "Nov", "Dec"
+    ];
+    
+    var d = artist.submitted.getDate();
+    var m = monthNames[artist.submitted.getMonth()];
+    var y = artist.submitted.getFullYear();
+    %>
+        <%= artist.author.username %> | <%=  m+ ' ' +d+ ' ' +y %>
+        <a id="artist-card" class="rating-btn badge badge-secondary" href="/artists/<%= artist.id %>">See reviews</a>
+        <a class="rating-btn badge badge-secondary" role="button" data-toggle="collapse" href="#<%= artist.name %>" role="button" aria-expanded="false" aria-controls="<%= artist._id %>">Rate</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- -->
+  <% }); %>
+<div>
+
+
+
+
+
+<!-- Front End JS -->
+
+ <script>
+
+
+
+ 
+
+</script>
+<% include ../partials/add-artist %>
+<% include ../partials/scripts %>
+<% include ../partials/footer %>

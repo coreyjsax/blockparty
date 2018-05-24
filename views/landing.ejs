@@ -1,0 +1,49 @@
+<% include partials/head %>
+<% include partials/slides %>
+<div class="wrapper">
+  <div class="container">
+    <div class="accordion">
+	    <div class="accordion-header">Pizza Luce Block Party 8/11/18
+	    </div>
+	    <div class="accordion-content">The Pizza Lucé Block Party is back again for 2018. Join the party at 119 North 4th Street on Saturday August 11th.
+	    </div>
+	  
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="card">
+    <div class="card-header news">
+      <h4 class="news">Submit an artist to play the Block Party!</h4>
+    </div>
+    <div class="card-body">
+      <p class="news-body-p">We're seeking Minnesota artists to perform at this year's Pizza Lucé Block Party. We're also asking our fans to help us rate the artists you helped us choose.<br><br>
+      To get started submitting an artist, you'll need to create an account. To rate bands, you'll also need to create an account. However, you can view submitted bands without an account. 
+      </p>
+      <% if (!currentUser) { %>
+      <a href="/login" style="float:right"  id="signup" class="fancy" >log-in</a>
+      <a href="/signup" style="float:right"  id="signup" class="fancy" >create account</a>
+      <% } else { %>
+       <a href="/artists" style="float:right"  id="signup" class="fancy" >get started</a>
+       <% } %>
+    </div>
+    <div class="card-footer text-muted news-footer-text">
+      <img src="https://pizzaluce.com/assets/logo-16.png" width="50px">
+      <div style="float:right">posted may 4th, 2018</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>$(".accordion").on("click", ".accordion-header", function() {
+ 	$(this).toggleClass("active").next().slideToggle();
+ });</script>
+
+
+
+
+<% include partials/scripts %>
+<% if (currentUser) { %>
+<% include partials/footer %>
+<% } %>

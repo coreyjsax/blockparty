@@ -1,0 +1,46 @@
+<% include ../partials/head %>
+<% include ../partials/nav %>
+
+<div class="wrap">  
+<div class="card-columns">
+
+<% ratings.forEach(function(ratings){ %>
+
+<div class="card text-white bg-dark">
+  
+  <div class="card-header review-header"><%= ratings.artist_name %> <span class="review-score badge badge-pill badge-info"><%= ratings.score %></span></div>
+  <div class="card-body">
+    <h5 class="card-title"></h5>
+    <p class="card-text"><%= ratings.comment %></p>
+    
+  </div>
+  <div class="card-footer text-muted rating-date">
+    
+    <% // date formatting for mongoose date
+    var monthNames = [
+      "Jan", "Feb", "Mar",
+      "Apr", "May", "Jun", "Jul",
+      "Aug", "Sept", "Oct",
+      "Nov", "Dec"
+    ];
+    
+    var d = ratings.reviewed.getDate();
+    var m = monthNames[ratings.reviewed.getMonth()];
+    var y = ratings.reviewed.getFullYear();
+    %>
+    
+   <%= ratings.reviewer.username %> | <%=  m+ ' ' +d+ ' ' +y %>
+  </div>
+</div>
+
+
+
+
+<% }); %>
+</div>
+</div>
+<!-- Partials -->
+<% include ../partials/signup-modal %>
+<% include ../partials/add-artist %>     
+<% include ../partials/scripts %>
+<% include ../partials/footer %>

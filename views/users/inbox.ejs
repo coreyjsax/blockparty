@@ -1,0 +1,54 @@
+<% include ../partials/head %>
+
+<div class="wrap">
+    <div class="container-fluid overlay">
+       
+        
+        <div id="cc" class="d-flex flex-row flex-nowrap art-gallery">
+        </div>
+    </div>
+</div>
+<script>
+    function getContent(){
+        var markup='';
+        var header='';
+        
+        fetch('https://block-party-coreyjsax.c9users.io/api/users/<%= currentUser.id %>/inbox')
+        .then(function(res){
+            return res.json()
+        }).then(function(data){
+           var artistsLeft = data.length;
+              header = `<span>${artistsLeft} left to rate</span>`
+            for(i=0; i<data.length; i++){
+              
+               markup += `
+          <div class="card text-white artist-card">
+            <div class="side">
+              <div class="card-header">
+                <h4 id="" class="card-title">${data[i].name}</h4>
+                <span id="${data[i]._id}"></span>
+              </div>
+              <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${data[i].video}?rel=0" allowfullscreen></iframe>
+              </div>
+              <div class="card-body">
+                <span class="genre"> ${data[i].genre}</span>
+                <div><a id="artist-card" class="more-btn btn btn-outline-secondary btn-small" href="/artists/${data[i]._id}">Rate</a></div>
+              </div>
+              
+            </div>
+          </div>
+        `;
+                document.getElementById('cc').innerHTML = markup;
+            }
+        });
+    }
+    getContent()
+</script>
+
+
+<% include ../partials/add-artist %>     
+<% include ../partials/scripts %>
+<% if (currentUser) { %>
+<% include ../partials/footer %>
+<% } %>

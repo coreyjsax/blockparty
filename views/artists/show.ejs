@@ -1,0 +1,160 @@
+<% include ../partials/head %>
+<div class="show-wrap">
+  <div class="card text-white show-card">
+    <div class="card-header"><h2 class="card-title artist-card-title"><%= artist.name %></h2></div>
+    <div class="embed-responsive embed-responsive-4by3">
+      <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<%= artist.video %>?rel=0" allowfullscreen></iframe>
+    </div>
+    <div class="card-body">
+      <p class="card-text"><%= artist.description %></p>
+      <% if(currentUser && artist.author.id.equals(currentUser._id) || currentUser && currentUser.role === "superadmin") { %>
+            <a class="btn btn-info btn-sm" href="/artists/<%= artist.id %>/edit"><i  class="show-icon material-icons">edit</i></a>
+          <form class="delete-form" action="/artists/<%= artist.id %>?_method=DELETE" method="POST">
+            <button type="submit" class="show-buttons btn btn-danger btn-sm"><i class="show-icon material-icons">delete</i></button>
+          </form>
+      <% } %>
+    </div>
+    <div class="card rating-section">
+      <div id="rating-header" class="card-header">
+        <div class="rating-header-icons"><i class="material-icons rating-icon">stars</i><span id="star-counter"></span></div>
+      </div>
+      <div id="ra" class="card-body">
+      </div>
+      <% include ../partials/rating-gallery %>
+    </div>
+  </div>
+</div>
+<div class="rating-card-wrap">
+    <div id="" class="below-foot">
+     
+    </div>
+</div>
+<script>
+  function getReviews(){
+    const url = "https://block-party-coreyjsax.c9users.io/api/artists/<%= artist.id %>/ratings";
+    var markup ='';
+    var stars;
+    var score;
+    var totalStars;
+    
+    fetch(url)
+    .then(function(res){
+      return res.json()
+    }).then(function(reviews){
+        for(i=0; i<reviews.length; i++){
+          markup += `
+                <div class="container rating-comment">
+                  <img style="float:left;margin-right:5px;border-radius:50px" src="http://i.pravatar.cc/25">
+                  <h4 class=" rating-card-text rating-card-title card-title">${reviews[i].reviewer.username}'s rating<span id="badge${reviews[i]._id}"></span></h4>
+                  <p class="rating-card-text rating-card-p">${reviews[i].comment}</p>
+                </div>
+                <hr>
+          `;
+          
+        }
+        document.getElementById('ra').innerHTML = markup;
+        
+        return reviews;
+    }).then(function(reviews){
+          for(i=0; i<reviews.length; i++){
+
+            score = reviews[i].score;
+              var star1 = '&nbsp<i style="font-size:14px; margin-top:5px;" class="material-icons star">grade</i>',
+                  star2 = '&nbsp<i style="font-size:14px; margin-top:5px;" class="material-icons star">grade grade</i>',
+                  star3 = '&nbsp<i style="font-size:14px; margin-top:5px;" class="material-icons star">grade grade grade</i>',
+                  star4 = '&nbsp<i style="font-size:14px; margin-top:5px;" class="material-icons star">grade grade grade grade</i>',
+                  star5 = '&nbsp<i style="font-size:14px; margin-top:5px;" class="material-icons star">grade grade grade grade grade</i>',
+                  notrated = '&nbsp<span class="rating-text"> - no ratings - </span>';
+                  
+                  var test = document.querySelector('#badge'+ reviews[i]._id);
+                if(score<2){test.innerHTML = star1;} else
+                if(score<3){test.innerHTML = star2;} else
+                if(score<4){test.innerHTML = star3;} else
+                if(score<5){test.innerHTML = star4;} else
+                if(score>=5){test.innerHTML = star5;} else {
+                  test.innerHTML = notrated;
+                }
+                
+                var test = document.querySelector("#badge"+ reviews[i]._id);
+          }
+        }).then(function(score, totalStars){
+            test.innerText = score;
+            console.log(totalStars);
+        }).catch(function(err){
+          console.log(err)
+        });
+    //    for(i=0; i<reviews.length; i++){
+          
+       // }
+    
+  }
+  
+  
+  
+  getReviews();
+  
+/*  document.addEventListener("DOMContentLoaded", function(event){
+    fetch(url)
+    .then(handleErrors)
+    .then(parseJSON)
+    .then(function(data){
+      var reviewer;
+      var html = '';
+      for (i = 0; i < data.length; i++) {
+        score += data[i].score;
+      }
+      
+                    var star1 = '<i class="material-icons star">grade</i>',
+                    star2 = '<i class="material-icons star">grade grade</i>',
+                    star3 = '<i class="material-icons star">grade grade grade</i>',
+                    star4 = '<i class="materia l-icons star">grade grade grade grade</i>',
+                    star5 = '<i class="material-icons star">grade grade grade grade grade</i>',
+                    notrated = '<span class="rating-text"> - no ratings - </span>';
+                  
+                    var test = document.querySelector("#badge");
+                    
+        html += '<div class="card text-white bg-dark rate-card"> <div class="card-header review-header">' + data[i].reviewer.username + '<span class="review-score badge badge-pill badge-info">' + data[i].score + '</span></div><div class="card-body"><h5 class="card-title"></h5><p class="card-text">' + '"' + data[i].comment + '"' + '</p></div><div class="card-footer text-muted rating-date"></div></div>';
+        document.querySelector(".below-foot").innerHTML = html;
+      
+    }).catch(function(err){
+      console.log(err);
+    })
+    
+  }); */
+    
+  function handleErrors(res){
+    if(!res.ok){
+      throw Error(res.status);
+    }
+  return res;
+  }
+
+  function parseJSON (res){
+    return res.json().then(function(parsedData){
+      return parsedData;
+    })
+  } 
+  var allTheStars = 0;
+  function allStars(){
+    
+    fetch("https://block-party-coreyjsax.c9users.io/api/artists/<%= artist.id %>/ratings")
+    .then(function(response){
+      return response.json();
+    }).then(function(stars){
+      for(var i =0; i < stars.length; i++){
+        allTheStars += (stars[i].score);
+      }
+      return allTheStars;
+    }).then(function(allTheStars){
+      console.log(allTheStars);
+      var starCounter = document.querySelector("#star-counter");
+      starCounter.innerHTML = allTheStars;
+    })
+  }
+  allStars();
+  
+</script>
+<% include ../partials/scripts %>
+<% if (currentUser) {%>
+<% include ../partials/footer %>
+<% } %>

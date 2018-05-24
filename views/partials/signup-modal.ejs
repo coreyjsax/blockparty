@@ -1,0 +1,43 @@
+
+<!--Signup Modal -->
+<div class="modal fade" id="signup-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Signup</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/register" method="POST">
+                <div class="form-group">
+                    <input class="form-control" name="fName" type="text" placeholder="first name">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" name="lName" type="text" placeholder="last name">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" name="email" type="text" placeholder="email address">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" name="username" type="text" placeholder="username">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" name="password" type="password" placeholder="password">
+                </div>
+                
+            
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

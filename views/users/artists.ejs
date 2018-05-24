@@ -1,0 +1,60 @@
+<!-- Header -->
+<% include ../partials/head %>
+
+
+<div class="wrap">  
+<div class="card-columns">
+
+<% artists.forEach(function(artist){ %>
+
+<div class="card text-white bg-dark">
+  
+  <div class="card-header review-header"><a href="/artists/<%= artist.id %>"><%= artist.name %> <span class="review-score badge badge-pill"></span></a></div>
+  <div class="card-body">
+    <h5 class="card-title"></h5>
+    <p class="card-text"><%= artist.description %></p>
+    
+  </div>
+  <div class="card-footer text-muted rating-date">
+    
+     
+    <% // date formatting for mongoose date
+    var monthNames = [
+      "Jan", "Feb", "Mar",
+      "Apr", "May", "Jun", "Jul",
+      "Aug", "Sept", "Oct",
+      "Nov", "Dec"
+    ];
+    
+    var d = artist.submitted.getDate();
+    var m = monthNames[artist.submitted.getMonth()];
+    var y = artist.submitted.getFullYear();
+    %>
+    
+    
+    Posted: <%=  m+ ' ' +d+ ' ' +y %>
+    <% if(currentUser && artist.author.id.equals(currentUser._id)) {%>
+    <a href="/artists/<%=artist.id%>/edit"><i class="material-icons delete">create</i></a>
+    <form action="/artists/<%=artist.id%>?_method=DELETE" method="POST">
+        <button type="submit"><i class="material-icons delete">delete</i></button>
+    </form>
+   
+    <% } %>
+  </div>
+</div>
+
+<a class="rating-btn badge badge-secondary" role="button" data-toggle="collapse" href="#<%= artist.name %>" role="button" aria-expanded="false" aria-controls="<%= artist._id %>"></a>
+
+
+<% }); %>
+</div>
+</div>
+  
+
+<!-- Partials -->
+<% include ../partials/signup-modal %>
+<% include ../partials/add-artist %>     
+<!-- Partials -->
+<% include ../partials/scripts %>
+<!-- Footer -->
+<% include ../partials/footer %>

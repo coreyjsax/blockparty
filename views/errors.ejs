@@ -1,0 +1,16 @@
+<% include partials/head %>
+<% include partials/nav %>
+<h4>testing form validation page</h4>
+<p>dev note: logic working, now push errors to form and adjust css to show.</p>
+<% if (errors) { %>
+    <p><ul>
+       <% errors.forEach(function(errors) { %> 
+     <li><%= errors.msg %></li>
+   <% }); %>
+    </ul></p>
+<% } %>
+
+<% include partials/signup-modal %>
+  <% include partials/add-artist %>
+ <% include partials/scripts %>
+<% include partials/footer %>

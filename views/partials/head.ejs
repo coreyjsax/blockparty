@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+       <title>Pizza Luce Block Party</title> 
+       <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+       <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.css">
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+       <link href="https://fonts.googleapis.com/css?family=Dhurjati|Press+Start+2P|Barlow+Semi+Condensed:300,400,500|Cabin:400,500,600,700" rel="stylesheet">
+       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+       <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+       <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+    
+
+       <link rel="stylesheet" href="/stylesheets/main2.css">
+      
+       
+    </head>
+
+<body>
+    
+    
+<div class="fixed-top">
+   
+        <nav class="top-menu">
+            <ul>
+            <li id="logo"><img src="https://pizzaluce.com/assets/logo-16.png" width="90px"></li>
+            <li style="float:left"><a href="/">Home</a></li>
+            <li style="float:left"><a href="/artists">Music</a></li>
+            <li style="float:left"><a href="/sponsor">Sponsors</a></li>
+          
+            <li></li>
+      <% if(currentUser) { %>
+      <li style="float:right"><a id="open-button" href="#"><%= currentUser.username %></a></li>
+                <% } else { %>
+                <li style="float:right"><a href="/login">log-in</a></li>
+                <% } %>
+            </ul>
+            
+        </div>
+    </nav>
+
+  
+  
+</div>
+
+<div class="container flash-container">
+        <% if(error && error.length > 0){ %>
+        <div class="alert alert-danger alert-dismissible fade show flash" role="alert">
+        <%= error %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <% } %>
+      
+      <% if(success && success.length > 0){ %>
+        <div id="success-alert" class="alert alert-success alert-dismissible fade show flash" role="alert">
+        <%= success %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <% } %>
+        
+        <% if(info && info.length > 0){ %>
+        <div id="light-alert" class="alert alert-light alert-dismissible fade show flash form" role="alert">
+        
+        <h4 class="alert-heading"><%= info %></h4>
+        <img src="https://pizzaluce.com/assets/logo-16.png" width="50px">
+        <p class="alert-p">Creating an account is easy!</p>
+        <hr>
+        <div class="row">
+          <button type="button" id="login" class="" data-dismiss="alert">cancel</button>
+          <button type="button" id="signup" class="">get account</button>
+        </div>   
+      </div>
+        <% } %>
+      
+ </div>
+
+    
+<script>
+    $('.message a').click(function(){
+   $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+});
+</script>
+
+
+<div class="modal" id="login-warning" tabindex="-1" role="dialog" aria-labelledby="login-warning" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title alert-heading" id="login-warning">You need to be logged in to do that!</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <img src="https://pizzaluce.com/assets/logo-16.png" width="50px">
+        <p class="alert-p">Creating an account is easy!</p>
+      </div>
+      <div class="modal-footer">
+        <button  id="login" class="fancy" data-dismiss="alert">cancel</button>
+        <button  id="signup" class="fancy" >get account</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if (currentUser) { %>
+
+<div class="menu-wrap">
+  <nav class="menu">
+    
+     <div role="separator" class="dropdown-divider"></div>
+         <h6 class="top=data" >Signed in as <%= currentUser.username %></h6>
+     
+    
+     <div role="separator" class="dropdown-divider"></div>
+      <div  data-toggle="modal" data-target="#add-artist">
+     
+      </div>
+      <a class="dropdown-item" href="/user/<%= currentUser.id %>/ratings">my reviews</a>
+      <a class="dropdown-item" href="/user/<%= currentUser.id %>/artists">my artists</a>
+      <div role="separator" class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#">settings</a>
+      <div role="separator" class="dropdown-divider"></div>
+      <h6 class="top-data">Artists you've rated <span id="topbadge" class="badge badge-danger"></span></h6>
+    <h6 class="top-data">Total artists submitted <span id="artbadge" class="badge badge-info"></span></h6>
+    <div role="separator" class="dropdown-divider"></div>
+      <a class="dropdown-item" href="/logout">logout</a>
+    <button class="close-button" id="close-button">X</button>
+  </nav>
+</div>
+
+
+<% } %>
+
+
+   
+
+      
+ 
+  <script>
+     (function($) {
+//  "use strict";
+  var openBtn = $("#open-button"),
+    colseBtn = $("#close-button"),
+    menu = $(".menu-wrap");
+  // Open menu when click on menu button
+  openBtn.on("click", function() {
+    menu.addClass("active");
+  });
+  // Close menu when click on Close button
+  colseBtn.on("click", function() {
+    menu.removeClass("active");
+  });
+  // Close menu when click on anywhere on the document
+  $(document).on("click", function(e) {
+    var target = $(e.target);
+    if (target.is(".menu-wrap, .menu, .icon-list, .icon-list a, .icon-list a span, #open-button") === false) {
+      menu.removeClass("active");
+      e.stopPropagation();
+    }
+  });
+})(jQuery);
+    </script>     
+     

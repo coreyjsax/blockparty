@@ -1,0 +1,95 @@
+<% artists.forEach(function(artist){ %>
+  <div id="allartists" class="card text-white artist-card genre all-artists">
+    <div class="side">
+      <div class="card-header art-head">
+       <H4 id="" class="card-title art-title">
+           <% if (artist.name.length > 22) {
+                var artistNewName = artist.name.slice(0,22);
+                var artistNewName = artistNewName + "...";
+              } else {
+                  artistNewName = artist.name;
+              }
+           %>
+           <%= artistNewName %>&nbsp;&nbsp;
+        <span id="badge<%= artist.id %>" class="score-badge" >
+         <script>
+           function getRatings(){
+            var score;
+            fetch('https://block-party-coreyjsax.c9users.io/api/artists/<%= artist.id %>/ratings')
+            .then(function(res){
+              return res.json();
+            }).then(
+                function(data) {
+                  var score = 0;
+                  for (i = 0; i < data.length; i++) {
+                   score += data[i].score;
+                }
+                score = score/data.length;
+                score = (Math.round(score*5)/5).toFixed(2);
+                
+                var star1 = '<i class="material-icons star">grade</i>',
+                    star2 = '<i class="material-icons star">grade grade</i>',
+                    star3 = '<i class="material-icons star">grade grade grade</i>',
+                    star4 = '<i class="material-icons star">grade grade grade grade</i>',
+                    star5 = '<i class="material-icons star">grade grade grade grade grade</i>',
+                    notrated = '<span class="rating-text"> - no ratings - </span>';
+                    
+                var test = document.querySelector("#badge<%= artist.id %>");
+                if(score < 2){test.innerHTML = star1;} else
+                if(score < 3){test.innerHTML = star2;} else
+                if(score < 4){test.innerHTML = star3;} else
+                if(score < 5){test.innerHTML = star4;} else
+                if(score >= 5){test.innerHTML = star5;} else {
+                  test.innerHTML = notrated;
+                }
+                var test = document.querySelector("#badge<%= artist.id %>");
+          
+            }).then(function(score){
+                 test.innerText = score;
+            }).catch(function(err){
+              console.log(err)
+            });
+          }
+          getRatings();
+           // test.innerText = score;
+         </script>
+          </span></H4>
+      </div>
+      <div class="embed-responsive embed-responsive-4by3">
+        <!-- user should only need to enter youtube video id-->
+        
+        <a href="/artists/<%= artist.id %>">
+            <img class="embed-responsive-item yt-pic" src="https://img.youtube.com/vi/<%= artist.video %>/0.jpg" >
+        </a>
+      </div>
+      <div class="card-body">
+        <span class="genre"><%= artist.genre %></span>
+        <p class="card-text"></p>
+         <% // date formatting for mongoose date
+    var monthNames = [
+      "Jan", "Feb", "Mar",
+      "Apr", "May", "Jun", "Jul",
+      "Aug", "Sept", "Oct",
+      "Nov", "Dec"
+    ];
+    var d = artist.submitted.getDate();
+    var m = monthNames[artist.submitted.getMonth()];
+    var y = artist.submitted.getFullYear();
+    %>
+       <div class="text-muted rating-date">submitted by <%= artist.author.username %> | <%=  m+ ' ' +d+ ' ' +y %></div>
+       <div>
+         
+         <a id="artist-card" class="more-btn btn btn-outline-secondary btn-small" href="/artists/<%= artist.id %>">Review</a> </div>
+        
+        <!-- <a id="artist-card" class="more-btn btn btn-outline-secondary btn-small" data-toggle="modal" data-target="#login-warning" class="more-btn btn btn-outline-secondary btn-small" href="#">Review</a> </div> -->
+        <!-- Button trigger modal -->
+<!-- Modal -->
+     
+      </div>
+    </div>
+  </div>
+  
+   <!-- -->
+  <% }); %>
+  
+   

@@ -1,0 +1,71 @@
+ 
+  <!-- New Artist Modal -->
+<div class="modal fade" id="nartist" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      
+      <button  type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span id="#close" aria-hidden="true">&times;</span>
+        </button>
+           
+        <div class="">
+            
+<div class="form">
+<!--Make sure the form has the autocomplete function switched off:-->
+    <form id="nartist-form" autocomplete="off" action="/artists" method="POST" class="ac ">
+       <div class="form-card card new-artist">
+       <div class="form-header">
+           <% if(currentUser) { %>
+           <h4 class="news">Submit an Artist for the Block Party!</h4>
+           <img src="https://pizzaluce.com/assets/logo-16.png"width="50px">
+       </div>
+       
+       <div class="field-group form-group">
+           
+         <div class="field controls ">
+           <input id="name" class="" name="name" type="text"  placeholder="Artist name">
+          
+           
+         </div>
+       </div>
+       <div class="field-group">
+         <div class="field">
+           <input name="formed" type="text"  placeholder="When was band formed?" >
+          
+         </div>
+       </div>
+       <div class="field-group">
+         <div class="field autocomplete">
+           <input id="myInput" type="text" name="genre" placeholder="Genre" >
+           
+         </div>
+       </div>
+       <div class="field-group">
+         <div class="field">
+           <textarea id="arttext" name="description" placeholder="Artist bio" ></textarea>
+         
+         </div>
+         
+       </div>
+       <div class="field-group">
+         <div class="field">
+           <input name="video" type="text"  placeholder="Youtube video id"><a id="yt" href="https://www.youtube.com/watch?v=liJVSwOiiwg">How to find Youtube video ID</a>
+         </div>
+       </div>
+       
+      <button type="submit">Submit!</button>
+         <% } else { %>
+         <h4 class="news">Please log in to Submit an Artist!</h4>
+           <img src="https://pizzaluce.com/assets/logo-16.png"width="50px">
+         </div>
+         <div></div>
+         <% } %>
+      </div>
+    </form>
+     
+</div>
+</div> 
+      
+    </div>
+  </div>
+</div>

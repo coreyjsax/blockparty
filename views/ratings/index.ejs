@@ -1,0 +1,61 @@
+<% include ../partials/head %>
+
+
+<div id="rating-wrapper" class="wrap">  
+
+  <div class="container-fluid">
+    <h1 class="header">All Ratings</h1>
+    <p class="subhead">All ratings submitted by registered users.</p>
+  </div>
+
+  <div class="card-columns">
+
+  <% ratings.forEach(function(ratings){ %>
+
+    <div class="card text-white bg-dark">
+  
+      <div class="card-body review-header"><a href="/artists/<%= ratings.artist %>"><%= ratings.artist_name %></a> <span class="review-score badge badge-pill badge-info"><%= ratings.score %></span></div>
+  
+      <h5 class="card-title"></h5>
+      <p class="card-text">"<%= ratings.comment %>"</p>
+       <% // date formatting for mongoose date
+        var monthNames = [
+          "Jan", "Feb", "Mar",
+          "Apr", "May", "Jun", "Jul",
+          "Aug", "Sept", "Oct",
+          "Nov", "Dec"
+        ];
+    
+        var d = ratings.reviewed.getDate();
+        var m = monthNames[ratings.reviewed.getMonth()];
+        var y = ratings.reviewed.getFullYear();
+        %>
+      <div class="text-muted rating-date">
+        <%= ratings.reviewer.username %> | <%=  m+ ' ' +d+ ' ' +y %>
+      </div>
+   
+
+    <div class="card-footer text-muted rating-date">
+      <div class="btn-group" role="group" aria-label="Button group">
+        <form class="delete-form" action="/rating/<%=ratings._id%>?_method=DELETE" method="POST">
+          <button class="btn btn-outline-secondary navbtn" type="submit"><i id="delete-icon" class="material-icons">delete</i></button>
+        </form> 
+      </div>  
+    </div>
+    
+    </div>
+
+
+
+
+  <% }); %>
+  </div>
+</div>
+
+
+
+<% include ../partials/add-artist %>     
+<% include ../partials/scripts %>
+<% if (currentUser) { %>
+<% include ../partials/footer %>
+<% } %>
