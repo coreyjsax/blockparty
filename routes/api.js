@@ -62,6 +62,10 @@ router.get('/artists/:id/ratings', (req, res) => {
     });
 });
 
+/* router.get('/facebookdata/:id', (req, res) => {
+    
+}) */
+
 
 //Rating Routeshttps://stackoverflow.com/questions/5024787/update-model-with-mongoose-express-nodejs
 //=============
@@ -167,7 +171,6 @@ router.get('/users/:id/inbox', (req, res) => {
            var newList = artists.filter(function( o){
                return userReviewed.indexOf(o._id) === -1;
            })
-           console.log(newList);
            res.json(newList);
        });
    });

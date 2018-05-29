@@ -5,6 +5,8 @@ const Rating = require("../models/rating");
 const User = require("../models/user");
 const middleware = require("../middleware");
 
+
+
 //Ratings by User ID
 //==================
 router.get('/:id/ratings', function(req, res){
@@ -29,13 +31,10 @@ router.get('/:id/inbox', function(req, res){
             console.log(err)
             res.send(err);
         }
-        console.log(user);
         Artist.find({}, function(err, allArtists){
             if(err){
                 console.log(err);
             } else {
-                console.log(user);
-                console.log(allArtists);
                 res.render("users/inbox", {user:user, artists:allArtists});
             }
         })
@@ -60,9 +59,6 @@ router.get('/:id/artists', function(req, res){
     });
 });
 
-
-
-//Destroy Artists
 
 
 module.exports = router;

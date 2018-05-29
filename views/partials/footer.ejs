@@ -23,7 +23,6 @@
         return res.json()
       }).then(function(data){
         var badgeNum = data.length;
-        console.log(badgeNum);
         if(data.length > 0){
           document.getElementById('rate-badge').innerText = badgeNum;
           document.getElementById('topbadge').innerText = badgeNum;

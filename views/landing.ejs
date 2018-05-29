@@ -1,5 +1,6 @@
 <% include partials/head %>
 <% include partials/slides %>
+
 <div class="wrapper">
   <div class="container">
     <div class="accordion">
@@ -7,10 +8,10 @@
 	    </div>
 	    <div class="accordion-content">The Pizza Lucé Block Party is back again for 2018. Join the party at 119 North 4th Street on Saturday August 11th.
 	    </div>
-	  
     </div>
   </div>
 </div>
+
 <div class="container">
   <div class="card">
     <div class="card-header news">
@@ -27,22 +28,18 @@
        <a href="/artists" style="float:right"  id="signup" class="fancy" >get started</a>
        <% } %>
     </div>
+    
     <div class="card-footer text-muted news-footer-text">
       <img src="https://pizzaluce.com/assets/logo-16.png" width="50px">
       <div style="float:right">posted may 4th, 2018</div>
     </div>
+    
   </div>
 </div>
-
 </div>
-
 <script>$(".accordion").on("click", ".accordion-header", function() {
  	$(this).toggleClass("active").next().slideToggle();
  });</script>
-
-
-
-
 <% include partials/scripts %>
 <% if (currentUser) { %>
 <% include partials/footer %>

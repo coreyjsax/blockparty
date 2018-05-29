@@ -44,7 +44,7 @@
         for(i=0; i<reviews.length; i++){
           markup += `
                 <div class="container rating-comment">
-                  <img style="float:left;margin-right:5px;border-radius:50px" src="http://i.pravatar.cc/25">
+                  <img style="float:left;margin-right:5px;border-radius:50px" src="<%= currentUser.avatar %>" width="35px">
                   <h4 class=" rating-card-text rating-card-title card-title">${reviews[i].reviewer.username}'s rating<span id="badge${reviews[i]._id}"></span></h4>
                   <p class="rating-card-text rating-card-p">${reviews[i].comment}</p>
                 </div>
@@ -79,7 +79,7 @@
           }
         }).then(function(score, totalStars){
             test.innerText = score;
-            console.log(totalStars);
+           
         }).catch(function(err){
           console.log(err)
         });
@@ -146,7 +146,7 @@
       }
       return allTheStars;
     }).then(function(allTheStars){
-      console.log(allTheStars);
+      
       var starCounter = document.querySelector("#star-counter");
       starCounter.innerHTML = allTheStars;
     })

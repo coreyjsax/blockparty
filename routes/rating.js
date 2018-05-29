@@ -47,7 +47,8 @@ router.get('/leaderboard', (req, res) => {
     //reviewer data
     var reviewer = {
         id: req.user._id,
-        username: req.user.username
+        username: req.user.username,
+        avatar: req.user.avatar
     }
     //Make review object
     var newRating = {
@@ -64,7 +65,7 @@ router.get('/leaderboard', (req, res) => {
         if(err){
             console.log(err);
         } else {
-            console.log(newlyCreated);
+            
             req.flash("success", "Your review has been saved");
             res.redirect("back");
         }
