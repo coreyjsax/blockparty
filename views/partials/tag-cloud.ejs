@@ -1,0 +1,21 @@
+<!-- Tag Cloud Partial View-->
+
+ <div id="bbs" class="middle-menu container booking-buttons">
+    <button id="fullartists" class="btn btn-light btn-sm btn-gallery active toggle">All&ensp;<span class="btn-badge badge badge-info"><%= total %></span></button>
+    <button id="booked" class="btn btn-light btn-sm toggle btn-gallery ">Booked</button>
+    <% for (var key in count) { %>
+    <button type="button" id="<%= count[key].id %>" class=" test btn btn-info btn-sm btn-gallery" data-value="artists/genre/<%= count[key].genre %>"><%= count[key].genre %>&ensp;<span class="btn-badge badge badge-primary"><%= count[key].count %></span> </button>
+    <% } %>
+    <button type="button" class="btn btn-danger btn-sm btn-gallery" data-toggle="modal" data-target="#nartist">Add +</button>
+</div>   
+<!-- make server side variable for tag ids strip put spaces--> 
+<script>
+ 
+ $(document).ready(function(){
+	    $(".btn-gallery").click(function(evt){
+	     var href=jQuery(this).attr('data-value');
+	        $('#gallery-list').load(href);
+	    });
+     });
+ 
+</script>
