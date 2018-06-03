@@ -39,7 +39,7 @@ middlewareObj.checkArtistOwnership = function(req, res, next){
         req.flash("error", "Ooops!");
         res.redirect("back");
       } else {
-        if(foundArtist.author.id.equals(req.user._id) || req.user.role === "superadmin") {
+        if(foundArtist.author.id.equals(req.user._id) || req.user.username === "Corey Sax") {
         next();
         
           } else {

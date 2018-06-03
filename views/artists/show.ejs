@@ -7,7 +7,7 @@
     </div>
     <div class="card-body">
       <p class="card-text"><%= artist.description %></p>
-      <% if(currentUser && artist.author.id.equals(currentUser._id) || currentUser && currentUser.role === "superadmin") { %>
+      <% if(currentUser && artist.author.id.equals(currentUser._id) || currentUser && currentUser.username === "Corey Sax") { %>
             <a class="btn btn-info btn-sm" href="/artists/<%= artist.id %>/edit"><i  class="show-icon material-icons">edit</i></a>
           <form class="delete-form" action="/artists/<%= artist.id %>?_method=DELETE" method="POST">
             <button type="submit" class="show-buttons btn btn-danger btn-sm"><i class="show-icon material-icons">delete</i></button>
@@ -44,7 +44,7 @@
         for(i=0; i<reviews.length; i++){
           markup += `
                 <div class="container rating-comment">
-                  <img style="float:left;margin-right:5px;border-radius:50px" src="<%= currentUser.avatar %>" width="35px">
+                  <img style="float:left;margin-right:5px;border-radius:50px" src="${reviews[i].reviewer.avatar}" width="35px">
                   <h4 class=" rating-card-text rating-card-title card-title">${reviews[i].reviewer.username}'s rating<span id="badge${reviews[i]._id}"></span></h4>
                   <p class="rating-card-text rating-card-p">${reviews[i].comment}</p>
                 </div>

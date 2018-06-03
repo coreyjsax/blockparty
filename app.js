@@ -1,7 +1,9 @@
 const express       = require('express'),
       app             = express(),
+     
       bodyParser      = require("body-parser"),
       mongoose        = require("mongoose"),
+  
       flash           = require("connect-flash"),
       findOrCreate = require('mongoose-findorcreate'),
       passport        = require("passport"),
@@ -32,7 +34,7 @@ const cookieParser = require("cookie-parser");
 //Requiring Routes
 const apiRoutes = require("./routes/api"),
       artistRoutes  = require("./routes/artist"),
-     
+      authRoutes = require("./routes/auth"),
       indexRoutes   = require("./routes/index"),
       ratingRoutes = require("./routes/rating"),
       sponsorRoutes = require('./routes/sponsor'),
@@ -82,67 +84,11 @@ app.use(function(req, res, next){
       next();
 });
 
-//Facebook Auth// ===========
-const FacebookStrategy = require('passport-facebook').Strategy;
-
-const FACEBOOK_APP_ID = '209313839680350';
-const FACEBOOK_APP_SECRET = '3445fe34a1011da53134d86800b35b08';
-
-passport.use(new FacebookStrategy({
-  clientID: FACEBOOK_APP_ID,
-  clientSecret: FACEBOOK_APP_SECRET,
-  callbackURL: 'https://block-party-coreyjsax.c9users.io/auth/facebook/callback',
-  profileFields: ['id', 'displayName', 'gender', 'emails', 'picture.type(large)']
-  },
-  
-  function(accessToken, refreshToken, profile, done){
-    console.log(profile);
-   // User.findOrCreate({ facebookId: profile.id, username: profile.name}, function(err, user){
-    //  console.log('A new user from "%s" was inserted', user.facebookId);
-   //   return done(err, user);
-    User.findOne({ 'facebook.id' : profile.id },
-      function(err, user){
-        if (err) return done(err);
-        if (user) return done(null, user);
-          else {
-            //if there is no user found with that facebook id, create them
-            var newUser = new User();
-            // set all of the facbeook information in our user model
-            newUser.facebook.id = profile.id;
-            newUser.facebook.token = accessToken;
-            newUser.facebook.name = profile.displayName;
-            newUser.username = profile.displayName;
-            newUser.email = profile.emails[0].value;
-            newUser.avatar = profile.photos[0].value;
-            
-              if (typeof profile.emails != 'undefined' && profile.emails.length > 0)
-                newUser.facebook.email = profile.emails[0].value;
-              //save user to DB
-                newUser.save(function(err){
-                  if (err) throw err;
-                  return done(null, newUser);
-                });
-              }
-            });
-          }
-      ))
-    
-
-app.get('/auth/facebook',
-  passport.authenticate('facebook', {scope : ["email", "user_location", "user_hometown", "user_birthday", 'public_profile'] }));
-
-app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/artists');
-  });
-
-
 
 app.use("/", indexRoutes);
 app.use("/artists", artistRoutes);
 app.use("/api", apiRoutes);
-
+app.use("/auth", authRoutes);
 app.use("/rating", ratingRoutes);
 app.use("/sponsor", sponsorRoutes);
 app.use("/user", userRoutes);

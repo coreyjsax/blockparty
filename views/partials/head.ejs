@@ -34,7 +34,7 @@
           
             <li></li>
       <% if(currentUser) { %>
-      <li style="float:right"><a id="open-button" href="#"><%= currentUser.username %></a></li>
+      <a style="float:right" id="open-button" href="#"><img id="open-button" href="#" src="<%= currentUser.avatar %>" width="30px" style="border-radius:50px"></a></li>
                 <% } else { %>
                 <li style="float:right"><a href="/login">log-in</a></li>
                 <% } %>

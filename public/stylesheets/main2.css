@@ -11,17 +11,23 @@ html {
 
 
 body {
-  background: #DA4453;  /* fallback for old browsers */
-background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
-	background-size: 400% 400%;
-	-webkit-animation: Gradient 15s ease infinite;
+/*  background: #DA4453;  /* fallback for old browsers */
+/* background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+	background-size: 400% 400%; */
+/*	-webkit-animation: Gradient 15s ease infinite;
 	-moz-animation: Gradient 15s ease infinite;
-	animation: Gradient 15s ease infinite;
+	animation: Gradient 15s ease infinite; */
+background: #aa4b6b;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #3b8d99, #6b6b83, #aa4b6b);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #3b8d99, #6b6b83, #aa4b6b); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	
+
 overflow-x:hidden;
 background-repeat: no-repeat;
 background-attachment: fixed;
-
 background-color:black;
+
+
 }
 
 
@@ -68,7 +74,7 @@ background-color:black;
 
 .overlay {
   position: absolute;
-  z-index:1000;
+  z-index:900;
   -webkit-overflow-scrolling: touch;
   white-space: nowrap;
   display: flex;
@@ -77,6 +83,7 @@ background-color:black;
   padding:1px;
 
 }
+
 
 
 .art-gallery {
@@ -362,6 +369,16 @@ box-shadow: 0px -1px 12px -1px rgba(191,191,191,1);;
   background-color:#18c5ff;
 }
 
+.btn-badge {
+  font-size:10px;
+  background-color:#3bb0c3;
+  padding: 2px 4px 2px 4px;
+  box-shadow: 0px 1px 13px -6px #8F8F8F;
+-webkit-box-shadow: 0px 0px 0px 0px #8F8F8F;
+-moz-box-shadow: 0px 0px 0px 0px #8F8F8F;
+-o-box-shadow: 0px 0px 0px 0px #8F8F8F;
+}
+
 #note {
     color:white;
 }
@@ -405,6 +422,7 @@ box-shadow: 0px -1px 12px -1px rgba(191,191,191,1);;
 
 input[type=radio] { display:none; } */
 #rating-wrapper {
+  
   padding:20px 10px 0 10px;
 }
 
@@ -580,10 +598,20 @@ input[type=radio] { display:none; } */
   padding-left:0px;
   padding-right:0px;
   min-width:300px;
-  margin-right: 10px;
+  margin: 0px 10px 10px 0px;
   display: inline-block;
   flex: 0 0 auto;
+  -webkit-box-shadow: 0px 0px 45px -5px rgba(0,0,0,0.37);
+-moz-box-shadow: 0px 0px 45px -5px rgba(0,0,0,0.37);
+box-shadow: 0px 0px 45px -5px rgba(0,0,0,0.37);
 }
+
+.btn-toggle {
+   -webkit-box-shadow: 0px 0px 45px -5px rgba(0,0,0,0.37);
+-moz-box-shadow: 0px 0px 45px -5px rgba(0,0,0,0.37);
+box-shadow: 0px 0px 45px -5px rgba(0,0,0,0.37);
+}
+
 
 .bg-info {color:#212121;
 }
@@ -791,9 +819,7 @@ nav {
   transition: box-shadow 0.5s ease;
 }
 
-#middle-menu {
-  
-}
+
 
 nav li {
   display: inline-block;
@@ -840,7 +866,7 @@ nav a:hover {
 
 .booking-buttons {
   display:block;
-  margin: 0px 20px 0px 20px;
+  margin: 0px 10px 0px 10px;
   width:100%;
   
 }
@@ -941,6 +967,7 @@ input:focus.search {
 }
 
 .ratings-header {
+  
   padding-bottom:0px;
 }
 #ratings-search-prepend {
@@ -972,6 +999,12 @@ input:focus.search {
 .btn-secondary {
   color:white;
 }
+
+.btn-genre {
+  margin:2px;
+  
+}
+
 .search-btn {
   font-size:12px;
    font-family:'Cabin', cursive;
@@ -980,7 +1013,6 @@ input:focus.search {
 .ratings-headline {
   font-family:'Cabin', cursive;
   color:#eaeaea;
-  
 }
 
 .form-control::-webkit-input-placeholder { color: #a9a9a9; }  /* WebKit, Blink, Edge */
@@ -1457,6 +1489,17 @@ input[type=submit] {
   height:25px;
 }
 
+#rating-wrapper {
+   -webkit-box-shadow: 0px 0px 45px -5px rgba(0,0,0,0.37);
+-moz-box-shadow: 0px 0px 45px -5px rgba(0,0,0,0.37);
+box-shadow: 0px 0px 45px -5px rgba(0,0,0,0.37);
+}
+
+.ratings-header {
+   -webkit-box-shadow: 0px 0px 45px -5px rgba(0,0,0,0.37);
+-moz-box-shadow: 0px 0px 45px -5px rgba(0,0,0,0.37);
+box-shadow: 0px 0px 45px -5px rgba(0,0,0,0.37);
+}
 
 /*Form Styles*/
  .form-header {
@@ -1609,7 +1652,7 @@ input:focus.search {
 }
 
 .form a{
-  color:#ff2671;
+  color:white;
 }
 
 .all-artists {
@@ -1704,10 +1747,11 @@ textarea:focus .rating-comment {
   font-size:15px;
 }
 
-.middle-menu {
-  margin-top:440px;
+#tag-cloud {
+  margin-top:447px;
   margin-bottom:-10px;
   width:100%;
+  z-index: 1005;
 }
 
 #board {

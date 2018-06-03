@@ -57,7 +57,7 @@ router.get('/leaderboard', (req, res) => {
     }
     //Add new review and save to DB
     
-    
+    console.log(reviewer.avatar);
     
     
     

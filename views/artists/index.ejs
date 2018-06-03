@@ -5,41 +5,14 @@
 
 <div  class="container-fluid overlay">
   <div id="gallery-list" class="d-flex flex-row flex-nowrap art-gallery list">
-  <%- include ../partials/all-artists-gallery %>
+  <% include ../partials/all-artists-gallery %>
   </div>
- </div> 
- 
-<div class="middle-menu container">
-  <div id="bbs" class= "booking-buttons row" role="group" aria-label="Basic example">
-         
-        
+</div>
+<div id="tag-cloud">
+    <% include ../partials/tag-cloud %>
+</div>
     
-    
-         <script>
-            function createTagCloud(){
-                var tags = `<button id="fullartists" class="btn btn-secondary btn-sm active toggle">All</button>
-                            <button id="booked" class="btn btn-secondary btn-sm toggle">Booked</button>
-                            <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#nartist">Add +</button>`;
-                
-                fetch('https://block-party-coreyjsax.c9users.io/api/genre')
-                .then(function(res){
-                    return res.json();
-                }).then(function(tags){
-                    for(i=0; i<tags.length; i++){
-                        tags += `<button id="tag-${tags.[i]}" class="btn btn-secondary btn-sm toggle">${tags.[i]}</button>`;
-                    } 
-                    return tags;
-                    
-                }).then(function(tags){
-                    document.getElementById('bbs').innerHTML = tags;
-                })
-            }
-            createTagCloud();
-         </script>
-    
-    
-  </div>
-</div>  
+
 
 <div id="board" class="table-responsive">
  <% include ../partials/leaderboard %>
@@ -55,6 +28,8 @@ $('#fullartists').click(function(){
     $('#gallery-list').load('artists/all');
     getRatings();
 });
+
+
 </script>
 
 

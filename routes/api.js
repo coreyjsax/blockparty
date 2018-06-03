@@ -28,10 +28,40 @@ router.get('/artists', (req, res) => {
 });
 
 //Get Artist Genre Tag Cloud 
-router.get("/genre", function(req, res){
-    Artist.collection.distinct("genre", function(error, tags){
-        res.json(tags);
+
+
+router.get('/genre', function(req, res){
+    var genre = [];
+    Artist.find({}, {genre:1}, function(err, genre){
+        if (err){
+            console.log(err);
+        }
+        var result = [...genre.reduce((mp, o) => {
+            if (!mp.has(o.genre)) mp.set(o.genre, Object.assign({ count: 0}, o));
+            mp.get(o.genre).count++;
+            return mp;
+        }, new Map).values()];
+        var count = [];
+        for (var i=0; i < result.length; i++){
+            count.push({"genre": result[i]._doc.genre, "count": result[i].count})
+        }
+        
+        res.json(count);
     })
+})
+
+
+
+//Get Artist by Genre
+//==================
+
+router.get("/genre/:id", function(req, res){
+    Artist.find({'genre': req.params.id}, function (err, artist){
+        if(err){
+            res.redirect('/artists');
+        } 
+        res.json(artist);
+    });
 });
 
 //Get Artist by ID
@@ -56,11 +86,11 @@ router.get('/artists/:id/ratings', (req, res) => {
             if (err) {
                 res.send(err);
             }
-            
             res.json(rating);
         });
     });
 });
+
 
 /* router.get('/facebookdata/:id', (req, res) => {
     
@@ -175,6 +205,8 @@ router.get('/users/:id/inbox', (req, res) => {
        });
    });
 });
+
+
 
 //Loop through artists and get ratings, then average ratings and organize by artist
 

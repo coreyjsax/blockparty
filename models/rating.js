@@ -8,6 +8,7 @@ var ratingSchema = mongoose.Schema({
             ref: "User"
         },
         username: String,
+        avatar: String
     },
     comment: String, 
     artist: String,

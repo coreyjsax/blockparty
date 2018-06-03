@@ -10,13 +10,65 @@ const middleware = require("../middleware");
 //INDEX - show all artists
 router.get('/', function(req, res){
    //Get all artists from DB
+   var artists;
+   var tags;
+   var genreIds;
+   var genreData;
+   var count;
+   var total;
+   function formatId(str){
+        return str.toLowerCase().replace(/\s/g, '-').replace(/\//g,"-");
+   }
+   
    Artist.find({}, function(err, allArtists){
        if(err){
            res.render('/landing');
            console.log(err);
        } else {
-           res.render("artists/index", {artists:allArtists});
+          artists = allArtists;
        }
+       Artist.collection.distinct("genre", function(err, allGenres){
+           if(err){
+               res.render('/landing');
+               console.log(err);
+           } else {
+               tags = allGenres.sort();
+               genreData = {};
+               tags.forEach(function(item){
+                  genreData[item] = {
+                    type: (item),
+                    id: formatId(item)
+                  };
+              });
+              console.log(genreData)
+           } 
+           Artist.find({}, {genre:1}, function(err, genre){
+               if(err){
+                   console.log(err);
+               }
+               var result = [...genre.reduce((mp, o)=> {
+                   if(!mp.has(o.genre)) mp.set(o.genre, Object.assign({ count: 0}, o));
+                   mp.get(o.genre).count++;
+                   return mp;
+               }, new Map).values()];
+               var count = [];
+               var total = [];
+               for (var i=0; i < result.length; i++){
+                   count.push({"genre": result[i]._doc.genre, "count": result[i].count, "id": formatId(result[i]._doc.genre)});
+                   total.push(result[i].count);
+               }
+               function getSum(total, num){
+                   return total + num;
+               }
+               total = total.reduce(getSum);
+               console.log(count)
+               res.render("artists/index", {artists:artists, genreData:genreData, count:count, total: total});
+           })
+           
+           
+        
+       })
+       
    }).sort({ submitted: 'desc' });
 });
 
@@ -80,13 +132,28 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 
 //All Submitted Artists
 router.get("/all", function(req, res){
+    var artists;
+    var tags;
     Artist.find({}, function(err, allArtists){
        if(err){
            res.render('/landing');
            console.log(err);
        } else {
-           res.render("partials/all-artists-gallery", {artists:allArtists});
+              artists = allArtists;
+             // res.render("partials/all-artists-gallery", {artists:allArtists}); 
        }
+       Artist.collection.distinct("genre", function(err, allGenres){
+           if(err){
+               res.render('/landing');
+               console.log(err);
+           } else {
+               tags = allGenres;
+               
+               res.render("partials/all-artists-gallery", {artists:artists, tags:tags}); 
+           }
+           console.log(tags);
+               console.log(artists);
+       })
    }).sort({ submitted: 'desc' });
 });
 //Booked Artists
@@ -98,12 +165,27 @@ router.get("/newartist", function(req, res){
     res.render('partials/add-artist');
 });
 
+//Get List of Genres
+router.get("/genre", function(req, res){
+    Artist.collection.distinct("genre", function(err, tags){
+        if(err){
+            res.redirect('/artists');
+        }
+        tags = tags.sort();
+        res.render("partials/tag-cloud", {tags:tags});
+    });
+});
 
 
-
-//Get Artist Genre
+//Get Artists by Genre
 router.get("/genre/:id", function(req, res){
-    res.send("Here is the " + req.params.id + " template");
+    Artist.find({'genre': req.params.id}, function (err, artist){
+        if(err){
+            res.redirect('/artists');
+        } else {
+            res.render("partials/all-artists-gallery", {artists:artist});
+        }
+    }).sort({ submitted: 'desc' });
 });
 
 
