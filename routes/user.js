@@ -45,8 +45,8 @@ router.get('/:id/ratings', function(req, res){
 
 router.get('/:id/inbox', (req, res) => {
     var user = req.params.id;
-    var artistReq = 'https://block-party-coreyjsax.c9users.io/api/artists';
-    var userRatingReq = 'https://block-party-coreyjsax.c9users.io/api/users/'+ user + '/ratings';
+    var artistReq = '/api/artists';
+    var userRatingReq = '/api/users/'+ user + '/ratings';
     var inboxData=[];
     
     function getArtists(){
@@ -83,8 +83,8 @@ router.get('/:id/inbox', (req, res) => {
 router.get('/:id/inbox2', (req, res) => {
    var user = req.params.id;
    var userReviewed = [];
-   var artistUrl = 'https://block-party-coreyjsax.c9users.io/api/artists';
-   var userRatings = 'https://block-party-coreyjsax.c9users.io/api/users/'+ user + '/ratings';
+   var artistUrl = '/api/artists';
+   var userRatings = '/api/users/'+ user + '/ratings';
   // var reviewed =[];
    request(userRatings)
    .then(function(response){

@@ -175,8 +175,8 @@ router.get('/users/:id/artists', (req, res) => {
 router.get('/users/:id/inbox', (req, res) => {
    var user = req.params.id;
    var userReviewed = [];
-   var artistUrl = 'https://block-party-coreyjsax.c9users.io/api/artists';
-   var userRatings = 'https://block-party-coreyjsax.c9users.io/api/users/'+ user + '/ratings';
+   var artistUrl = '/api/artists';
+   var userRatings = '/api/users/'+ user + '/ratings';
    request(userRatings)
    .then((response) => {
      var reviewed = JSON.parse(response);
@@ -208,8 +208,8 @@ router.get('/users/:id/inbox', (req, res) => {
  var reviewJSON = [];
 
 router.get('/leaderboard-test', (req, res) => {
-   var artistUrl = 'https://block-party-coreyjsax.c9users.io/api/artists';
-   var ratingsUrl = 'https://block-party-coreyjsax.c9users.io/api/ratings';
+   var artistUrl = '/api/artists';
+   var ratingsUrl = '/api/ratings';
    var artistJSON = [];
    var reviewJSON = [];
    
@@ -269,7 +269,7 @@ var rtn = [];
 
 router.get("/leaderboard", (req, res) =>{
     //loop thorough ratings array and create an object for each artist. 
-    var ratingsUrl = 'https://block-party-coreyjsax.c9users.io/api/ratings';
+    var ratingsUrl = '/api/ratings';
     reviewJSON = [];
     var rtn=[];
     request(ratingsUrl)
@@ -287,7 +287,7 @@ router.get("/leaderboard", (req, res) =>{
 router.get("/raterank", (req, res) => {
     var orderedByWeight = {};
     var rankList = [];
-    var leaderboardUrl = 'https://block-party-coreyjsax.c9users.io/api/leaderboard';
+    var leaderboardUrl = '/api/leaderboard';
     request(leaderboardUrl)
     .then((response) => {
         var leaderboard = JSON.parse(response);

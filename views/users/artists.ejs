@@ -28,7 +28,7 @@
 <script>
 function getUserSubmitted(){
 
-  fetch('https://block-party-coreyjsax.c9users.io/api/users/<%= currentUser.id %>/artists')
+  fetch('/api/users/<%= currentUser.id %>/artists')
   .then(function(res){
     return res.json();
   }).then(
