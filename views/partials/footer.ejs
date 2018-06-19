@@ -17,7 +17,7 @@
    
     <script>
      function getRateBadge(){
-      fetch('https://nameless-shore-98809.herokuapp.com/api/users/<%= currentUser.id %>/inbox')
+      fetch('https://blockparty.pizzaluce.com/api/users/<%= currentUser.id %>/inbox')
       .then(function(res){
         return res.json()
       }).then(function(data){
@@ -32,7 +32,7 @@
      getRateBadge();
      
      function getArtistBadge(){
-       fetch('https://nameless-shore-98809.herokuapp.com/api/artists')
+       fetch('https://blockparty.pizzaluce.com/api/artists')
        .then(function(res){
          return res.json()
        }).then(function(data){
@@ -49,7 +49,7 @@
     
      getArtistBadge();
      function getRatingBadge(){
-       fetch('https://nameless-shore-98809.herokuapp.com/api/ratings')
+       fetch('https://blockparty.pizzaluce.com/api/ratings')
        .then(function(res){
          return res.json()
        }).then(function(data){

@@ -20,7 +20,7 @@
          <script>
            function getRatings(){
             var score;
-            fetch('/api/artists/<%= artist._id %>/ratings')
+            fetch('https://blockparty.pizzaluce.com/api/artists/<%= artist._id %>/ratings')
             .then(function(res){
               return res.json();
             }).then(
