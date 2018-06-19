@@ -28,7 +28,7 @@
 <script>
 function getUserSubmitted(){
 
-  fetch('/api/users/<%= currentUser.id %>/artists')
+  fetch('https://nameless-shore-98809.herokuapp.com/api/users/<%= currentUser.id %>/artists')
   .then(function(res){
     return res.json();
   }).then(

@@ -287,7 +287,7 @@ router.get("/leaderboard", (req, res) =>{
 router.get("/raterank", (req, res) => {
     var orderedByWeight = {};
     var rankList = [];
-    var leaderboardUrl = '/api/leaderboard';
+    var leaderboardUrl = 'https://nameless-shore-98809.herokuapp.com/api/leaderboard';
     request(leaderboardUrl)
     .then((response) => {
         var leaderboard = JSON.parse(response);

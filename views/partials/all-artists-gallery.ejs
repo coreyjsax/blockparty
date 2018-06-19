@@ -20,7 +20,7 @@
          <script>
            function getRatings(){
             var score;
-            fetch('/api/artists/<%= artist.id %>/ratings')
+            fetch('https://nameless-shore-98809.herokuapp.com/api/artists/<%= artist.id %>/ratings')
             .then(function(res){
               return res.json();
             }).then(

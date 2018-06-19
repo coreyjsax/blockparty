@@ -17,7 +17,7 @@
    
     <script>
      function getRateBadge(){
-      fetch('/api/users/<%= currentUser.id %>/inbox')
+      fetch('https://nameless-shore-98809.herokuapp.com/api/users/<%= currentUser.id %>/inbox')
       .then(function(res){
         return res.json()
       }).then(function(data){
@@ -32,7 +32,7 @@
      getRateBadge();
      
      function getArtistBadge(){
-       fetch('/api/artists')
+       fetch('https://nameless-shore-98809.herokuapp.com/api/artists')
        .then(function(res){
          return res.json()
        }).then(function(data){
@@ -49,7 +49,7 @@
     
      getArtistBadge();
      function getRatingBadge(){
-       fetch('/api/ratings')
+       fetch('https://nameless-shore-98809.herokuapp.com/api/ratings')
        .then(function(res){
          return res.json()
        }).then(function(data){

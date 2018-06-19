@@ -5,7 +5,7 @@
     var objs = [];
     function getRank(){
        var html='';
-       fetch('/api/leaderboard')
+       fetch('https://nameless-shore-98809.herokuapp.com/api/leaderboard')
        .then(function(res){
           data = JSON.parse(res);
        }).then(function(data){
