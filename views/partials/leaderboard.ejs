@@ -38,7 +38,7 @@
       var orderedByWeight = {};
       var rankList = [];
       
-      fetch('https://block-party-coreyjsax.c9users.io/api/raterank')
+      fetch('/api/raterank')
       .then(function(res){
        return res.json()
       }).then(function(data){

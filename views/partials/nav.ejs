@@ -77,7 +77,7 @@
       
     <script>
      function getRateBadge(){
-      fetch('https://block-party-coreyjsax.c9users.io/api/users/<%= currentUser.id %>/inbox')
+      fetch('/api/users/<%= currentUser.id %>/inbox')
       .then(function(res){
         return res.json()
       }).then(function(data){
@@ -91,7 +91,7 @@
      getRateBadge();
      
      function getArtistBadge(){
-       fetch('https://block-party-coreyjsax.c9users.io/api/artists')
+       fetch('/api/artists')
        .then(function(res){
          return res.json()
        }).then(function(data){
@@ -104,7 +104,7 @@
      }
      getArtistBadge();
      function getRatingBadge(){
-       fetch('https://block-party-coreyjsax.c9users.io/api/ratings')
+       fetch('/api/ratings')
        .then(function(res){
          return res.json()
        }).then(function(data){
