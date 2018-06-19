@@ -45,8 +45,8 @@ router.get('/:id/ratings', function(req, res){
 
 router.get('/:id/inbox', (req, res) => {
     var user = req.params.id;
-    var artistReq = 'https://nameless-shore-98809.herokuapp.com/api/artists';
-    var userRatingReq = 'https://nameless-shore-98809.herokuapp.com/api/users/'+ user + '/ratings';
+    var artistReq = 'https://blockparty.pizzaluce.com/api/artists';
+    var userRatingReq = 'https://blockparty.pizzaluce.com/api/users/'+ user + '/ratings';
     var inboxData=[];
     
     function getArtists(){
@@ -83,8 +83,8 @@ router.get('/:id/inbox', (req, res) => {
 router.get('/:id/inbox2', (req, res) => {
    var user = req.params.id;
    var userReviewed = [];
-   var artistUrl = 'https://nameless-shore-98809.herokuapp.com/api/artists';
-   var userRatings = 'https://nameless-shore-98809.herokuapp.com/api/users/'+ user + '/ratings';
+   var artistUrl = 'https://blockparty.pizzaluce.com/api/artists';
+   var userRatings = 'https://blockparty.pizzaluce.com/api/users/'+ user + '/ratings';
   // var reviewed =[];
    request(userRatings)
    .then(function(response){
