@@ -175,8 +175,8 @@ router.get('/users/:id/artists', (req, res) => {
 router.get('/users/:id/inbox', (req, res) => {
    var user = req.params.id;
    var userReviewed = [];
-   var artistUrl = '/api/artists';
-   var userRatings = '/api/users/'+ user + '/ratings';
+   var artistUrl = 'https://nameless-shore-98809.herokuapp.com/api/artists';
+   var userRatings = 'https://nameless-shore-98809.herokuapp.com/api/users/'+ user + '/ratings';
    request(userRatings)
    .then((response) => {
      var reviewed = JSON.parse(response);
@@ -208,8 +208,8 @@ router.get('/users/:id/inbox', (req, res) => {
  var reviewJSON = [];
 
 router.get('/leaderboard-test', (req, res) => {
-   var artistUrl = '/api/artists';
-   var ratingsUrl = '/api/ratings';
+   var artistUrl = 'https://nameless-shore-98809.herokuapp.com/api/artists';
+   var ratingsUrl = 'https://nameless-shore-98809.herokuapp.com/api/ratings';
    var artistJSON = [];
    var reviewJSON = [];
    
@@ -269,7 +269,7 @@ var rtn = [];
 
 router.get("/leaderboard", (req, res) =>{
     //loop thorough ratings array and create an object for each artist. 
-    var ratingsUrl = '/api/ratings';
+    var ratingsUrl = 'https://nameless-shore-98809.herokuapp.com/api/ratings';
     reviewJSON = [];
     var rtn=[];
     request(ratingsUrl)
