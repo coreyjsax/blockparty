@@ -82,6 +82,7 @@ background-color:black;
   flex-wrap: nowrap;
   overflow-x: auto;
   padding:1px;
+  
 
 }
 
@@ -91,6 +92,7 @@ background-color:black;
  width:100%;
  overflow:auto;
  z-index:10;
+ margin-bottom:-10px;
  
 }
 
@@ -1939,7 +1941,7 @@ textarea:focus .rating-comment {
 }
 
 #tag-cloud {
-  margin-top:447px;
+  margin-top:435px;
   margin-bottom:0px;
   width:100%;
   z-index: 1005;

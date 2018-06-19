@@ -41,7 +41,10 @@ const apiRoutes = require("./routes/api"),
       userRoutes = require("./routes/user");
      
       
-mongoose.connect("mongodb://localhost/blockparty_v1");
+//mongoose.connect("mongodb://localhost/blockparty_v1");
+mongoose.connect(process.env.DATABASEURL);
+//mongodb://coreyjsax:Summit123@ds113041-a0.mlab.com:13041,ds113041-a1.mlab.com:13041/pl-block-party-18?replicaSet=rs-ds113041
+console.log(process.env.DATABASEURL)
 app.use(morgan('dev')); //log requests to console
 app.use(cookieParser());//read cookies (needed for auth)
 app.use(bodyParser.urlencoded({extended: true}));//get data from html forms
