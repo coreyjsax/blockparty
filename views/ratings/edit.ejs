@@ -1,0 +1,9 @@
+<div>
+    <div class="rating">
+        <!-- Draw -->
+        <form class="rate" action="/rating/<%= rating._id %>?_method=PUT" method="POST">
+           <textarea name="rating[comment]" id="exampleFormControlTextarea1" class="form-control form-control rating-comment" data-autosize-input='{ "space": 40 }' rows="2"><%= rating.comment %></textarea>
+            <button type="submit">Submit!</button>
+        </form>
+    </div>
+</div>

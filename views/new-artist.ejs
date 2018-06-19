@@ -2,58 +2,57 @@
   <!-- New Artist Modal -->
 <div class="modal fade" id="nartist" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      
-      <button  type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span id="#close" aria-hidden="true">&times;</span>
-        </button>
-           
-        <div class="">
-            
-<div class="form">
+    <div style="background:none;" class="modal-content">
+       
+        <div class="card text-white show-card">
+        <div  class="card-header">
+            <div style="float:right;margin-right:5px;">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span id="#close" aria-hidden="true">&times;</span>
+               </button> 
+            </div>
+            <h4 class="card-title artist-card-title">Submit an Artist for the Block Party!</h4>
+        </div>   
+<div class="card-body">
 <!--Make sure the form has the autocomplete function switched off:-->
-    <form id="nartist-form" autocomplete="off" action="/artists" method="POST" class="ac ">
-       <div class="form-card card new-artist">
+    <form id="nartist-form" autocomplete="off" action="/artists" method="POST" class="  artist-edit-form ">
+       <div class="">
        <div class="form-header">
            <% if(currentUser) { %>
-           <h4 class="news">Submit an Artist for the Block Party!</h4>
            <img src="https://pizzaluce.com/assets/logo-16.png"width="50px">
        </div>
        
        <div class="field-group form-group">
            
          <div class="field controls ">
-           <input id="name" class="" name="name" type="text"  placeholder="Artist name">
-          
-           
+           <input id="name" class="form-control-sm artist-edit" name="name" type="text"  placeholder="Artist name">
          </div>
        </div>
        <div class="field-group">
          <div class="field">
-           <input name="formed" type="text"  placeholder="When was band formed?" >
-          
+           <input name="formed" class="form-control-sm artist-edit" type="text"  placeholder="When was band formed?" >
          </div>
        </div>
        <div class="field-group">
          <div class="field autocomplete">
-           <input id="myInput" type="text" name="genre" placeholder="Genre" >
+           <input id="myInput" class="form-control-sm artist-edit" type="text" name="genre" placeholder="Genre" >
            
          </div>
        </div>
        <div class="field-group">
          <div class="field">
-           <textarea id="arttext" name="description" placeholder="Artist bio" ></textarea>
+           <textarea id="arttext" class="form-control-sm artist-edit" name="description" placeholder="Artist bio" ></textarea>
          
          </div>
          
        </div>
        <div class="field-group">
          <div class="field">
-           <input name="video" type="text"  placeholder="Youtube video id"><a id="yt" href="https://www.youtube.com/watch?v=liJVSwOiiwg">How to find Youtube video ID</a>
+           <input name="video" class="form-control-sm artist-edit" type="text"  placeholder="Youtube video id"><a id="yt" href="https://www.youtube.com/watch?v=liJVSwOiiwg">How to find Youtube video ID</a>
          </div>
        </div>
        
-      <button type="submit">Submit!</button>
+      <button class="artist-edit-submit btn-sm btn-secondary" style="float:right" type="submit">Submit!</button>
          <% } else { %>
          <h4 class="news">Please log in to Submit an Artist!</h4>
            <img src="https://pizzaluce.com/assets/logo-16.png"width="50px">

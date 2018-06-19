@@ -1,6 +1,6 @@
 const express       = require('express'),
       app             = express(),
-     
+      axios = require('axios'),
       bodyParser      = require("body-parser"),
       mongoose        = require("mongoose"),
   
@@ -66,6 +66,19 @@ app.use(passport.session()); //persistent login sessions
 passport.use(new LocalStrategy(User.authenticate()));
 //passport.serializeUser(User.serializeUser());
 //passport.deserializeUser(User.deserializeUser());
+
+
+//Custom Validators for Express Validator
+//======================================
+app.use(expressValidator({
+  customValidators: {
+    isNotEqual: (value1, value2) => {
+      return value1 != value2
+    }
+  }
+}));
+
+
 passport.serializeUser(function(user, done){
   done(null, user.id)
 });

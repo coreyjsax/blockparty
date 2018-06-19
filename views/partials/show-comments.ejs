@@ -1,0 +1,140 @@
+
+<% rating.forEach(function(rating){ %>
+
+  <% 
+    var ratingScore;
+    var star1 = '<i class="material-icons star">grade</i>',
+        star2 = '<i class="material-icons star">grade grade</i>',
+        star3 = '<i class="material-icons star">grade grade grade</i>',
+        star4 = '<i class="material-icons star">grade grade grade grade</i>',
+        star5 = '<i class="material-icons star">grade grade grade grade grade</i>',
+        notrated = '<span class="rating-text"> - no ratings - </span>';
+                    
+        if(rating.score < 2){ratingScore = star1;} else
+        if(rating.score < 3){ratingScore = star2;} else
+        if(rating.score < 4){ratingScore = star3;} else
+        if(rating.score < 5){ratingScore = star4;} else
+        if(rating.score >= 5){ratingScore = star5;} else {
+          ratingScore = notrated;
+        }
+  %>
+
+
+  <div id="rating-<%=rating._id %>" class="rating-comment">
+    <img style="float:left;margin-right:5px;border-radius:50px" width="30px" src="<%= rating.reviewer.avatar %>">
+    <h4 class=" rating-card-text rating-card-title card-title"><%= rating.reviewer.username %>'s rating<span>&ensp;<%- ratingScore %></span></h4>
+    <p class="rating-card-text rating-card-p"><%= rating.comment %></p>
+    
+     <form id="<%= rating.id %>-form" class="rate-form" action="/rating/<%= rating.id %>?_method=PUT" method="POST">
+           <div class="star-holder" style="float:left; margin:5px 0px -5px -17px">
+	        <div class="rating-wrapper">
+
+             <table class="controls rating">
+          <tr><td>
+          		<label><input type="radio" name="rating[score]" value="1" />1</label>
+          </td>
+          <td>
+          		<label><input type="radio" name="rating[score]" value="2" />2</label>
+          </td>
+          <td>
+          		<label><input type="radio" name="rating[score]" value="3" />3</label>
+          </td>
+          <td>
+          		<label><input type="radio" name="rating[score]" value="4" />4</label>
+          </td>
+          <td>
+          		<label><input type="radio" name="rating[score]" value="5" />5</label>
+          </td>
+          </tr>
+          </table>
+          
+          </div>
+          </div>
+
+     <textarea name="rating[comment]" id="exampleFormControlTextarea1" class="form-control form-control-sm rating-comment rating-comment-show-comments" data-autosize-input='{ "space": 40 }' rows="1"><%= rating.comment %></textarea>
+            <div class="rating-comment-esc">press esc or <a id="<%=rating.id %>-esc" class="cancel-button">cancel</a></div>
+            <button id="<%=rating.id %>-submit" style="display:none;"type="submit">Submit!</button>
+     </form>
+    
+   
+    <% if (currentUser && JSON.stringify(currentUser._id) === JSON.stringify(rating.reviewer.id)){ %>
+    <div id="<%=rating._id %>-rating-btn-grp" class="rating-button-group-show" style="float:right">
+     <button id="<%= rating.id %>" class="rating-card-edit-btn rating-card-button rating-card-btn" data-value="rating-<%= rating.id %>">
+       <span class="rating-card-buttons"><i style="font-size:15px"class="material-icons">edit</i></span>
+     </button>
+      <span style="font-size:14px;color:#f41055;">|</span>
+        <form class="delete-form" action="/rating/<%= rating.id %>?_method=DELETE" method="POST">
+          <button style="border:none;background:transparent; cursor:pointer;" class="rating-card-button" type="submit"><span  class="rating-card-buttons"><i style="font-size:15px" class="material-icons">delete</i></span>
+          </button>  
+        </form>
+     </div>
+    <% } %>
+  </div>
+  <hr>
+<% }); %>
+
+
+
+<script>
+
+ $(document).ready(function(){
+   $('.rate-form').hide();
+   $('.rating-card-edit-btn').click(function(){
+    
+    var p = $('#' + this.id + '-p');
+    var submit = $('#' + this.id + '-submit');
+    var form = $('#' + this.id + '-form');
+    var esc = $('#' + this.id + '-esc');
+    var btngroup = $('#' + this.id + '-rating-btn-grp');
+    
+    p.hide();
+    btngroup.hide();
+    form.fadeIn(500);
+    
+    $(form).keypress(function(event){
+      if(event.keyCode === 13){
+        $(form).trigger('submit');
+      }
+      if(event.keyCode === 27){
+        $(esc).click();
+      }
+    })
+    $(document).on('keyup', function(event){
+      if(event.keyCode === 27){
+        $(esc).click();
+      }
+    })
+    $(esc).click(function(){
+      form.hide();
+      btngroup.fadeIn(500);
+      p.fadeIn(500);
+    });
+   })
+ })
+ 
+ $('textarea').on('keydown', function(e){
+    
+}).on('input', function(){
+    $(this).height(1);
+    var totalHeight = $(this).prop('scrollHeight') - parseInt($(this).css('padding-top')) - parseInt($(this).css('padding-bottom'));
+    $(this).height(totalHeight);
+});
+ 
+ $('.controls.rating')
+    .addClass('starRating') //in case js is turned off, it fals back to standard radio button
+    .on('mouseenter', 'label', function(){
+            DisplayRating($(this)); // when we hover into a label, show the ratings
+        }
+    )
+    .on('mouseleave', function() {
+        // when we leave the rating div, figure out which one is selected and show the correct rating level
+        var $this = $(this),
+            $selectedRating = $this.find('input:checked');
+        if ($selectedRating.length == 1) {
+            DisplayRating($selectedRating); // a rating has been selected, show the stars
+        } else {
+            $this.find('label').removeClass('on'); // nothing clicked, remove the stars
+        };
+    }
+);
+</script>

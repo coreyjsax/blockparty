@@ -1,0 +1,201 @@
+<% include ../partials/head %>
+<% var errors;
+   var checkArtist;
+   
+   if (!artistData){
+     var artistData = {
+       name: "",
+       video: "",
+       genre: "Select Genre",
+       description: "",
+       question: ""
+     }
+     
+   }
+%>
+<div class="show-wrap">
+  <div class="card text-white show-card new-artist-card">
+    <div class="card-header">
+      <h2 style="text-align:center;" class="card-title artist-card-title">Submit an Artist!</h2>
+    </div>
+    <div class="card-body">
+      <form class="artist-edit-form" action="/artists" method="POST">
+        
+       
+       <%
+        if (errors) {
+           var errorsNamed = {
+            name: "",
+            video: "",
+            genre: "",
+            bio: "",
+            question: ""
+          }; 
+          
+       var nameErrors =  errors.filter(function(item)  {return item.param=="name"});
+       var videoErrors = errors.filter(function(item) {return item.param=="video"});
+       var genreErrors = errors.filter(function(item){return item.param=="genre"});
+       var bioErrors = errors.filter(function(item){return item.param =="description"});
+       var questionErrors = errors.filter(function(item){return item.param =="question"});
+       
+       errorsNamed.name = nameErrors;
+       errorsNamed.video = videoErrors;
+       errorsNamed.genre = genreErrors;
+       errorsNamed.bio = bioErrors;
+       errorsNamed.question = questionErrors;
+        //  errorsNamed[video] = errors.filter (item) => {return item.param=="video"};
+        //   errorsNamed[genre] = errors.filter (item) => {return item.param=="genre"};
+        //   errorsNamed[bio] = errors.filter (item) => {return item.param=="bio"};
+        //  errorsNamed[question] = errors.filter (item) => {return item.param=="question"}; 
+          
+        }
+       %>
+      <!-- artist name -->
+        <div class="field-group form-group">
+         <div class="field controls ">
+           <label class="artist-edit-label">Artist name</label>
+           <input id="name" class="form-control-sm artist-edit" name="name" value="<%= artistData.name %>" type="text"  placeholder="Enter artist name">
+         </div>
+       </div>
+       <% if (checkArtist) { %>
+        <div><h4 class="form-error"><%= checkArtist %></h4></div>
+       <% } %>
+       <!-- handle validation -->
+       <% if (errors) { %>
+       <div><h4 class="form-error">
+         <% errorsNamed.name.forEach(function(nE){%>
+              <%= nE.msg %>
+          <% }) %>
+           </h4></div>
+       <% } %>
+       
+  
+       <!-- artist video -->
+       <div class="field-group form-group">
+         <div class="field controls ">
+           <label class="artist-edit-label">Video</label>
+           <input id="video" class="form-control-sm artist-edit" name="video" value="<%= artistData.video %>" type="text" placeholder="Enter Youtube video id">
+           <a id="yt" href="https://www.youtube.com/watch?v=liJVSwOiiwg">How to find Youtube video ID</a>
+         </div>
+       </div>
+       <!-- handle validation -->
+       <% if (errors) { %>
+       <div><h4 class="form-error">
+         <% errorsNamed.video.forEach(function(vE){%>
+              <%= vE.msg %>
+          <% }) %>
+           </h4></div>
+        <% } %>
+       <!-- genre -->
+        <div class="field-group form-group">
+        <div class="field">
+          <label class="artist-edit-label">Genre</label>
+          <select class="form-control form-control-sm artist-edit" name="genre" >
+            <option value="<%= artistData.genre %>"><%=artistData.genre %></option>
+            <option value="alternative">Alternative</option>
+            <option value="country">Country</option>
+            <option value="electronic">Electronic</option>
+            <option value="folk">Folk</option>
+            <option value="funk">Funk</option>
+            <option value="hard-rock">Hard-Rock</option>
+            <option value="hip-hop">Hip-Hop</option>
+            <option value="house">House</option>
+            <option value="indie-rock">Indie-Rock</option>
+            <option value="jazz">Jazz</option>
+            <option value="pop">Pop</option>
+            <option value="post-punk">Post-Punk</option>
+            <option value="post-rock">Post-Rock</option>
+            <option value="punk-rock">Punk-Rock</option>
+            <option value="r&b">R&B</option>
+            <option value="rap">Rap</option>
+            <option value="soul">Soul</option>
+            <option value="swing">Swing</option>
+          </select>
+        </div>
+      </div>
+      <!-- handle validation -->
+       <% if (errors) { %>
+       <div><h4 class="form-error">
+         <% errorsNamed.genre.forEach(function(gE){%>
+              <%= gE.msg %>
+          <% }) %>
+           </h4></div>
+        <% } %>
+       <!-- Band Bio -->
+       <div class="field-group form-group">
+        <div class="field">
+          <label class="artist-edit-label">Artist bio (min 150 char, max 700)</label>
+          <textarea id="desc" class="form-control-sm artist-edit input"  type="text" name="description" value=""  data-autosize-input='{ "space": 40 }' rows="6" cols="50" placeholder="We'll use this for your Artist profile."><%= artistData.description %></textarea>
+        </div>
+      </div>
+      <div id="charNum" class="form-error"></div>
+       <!-- handle validation -->
+       <% if (errors) { %>
+       <div><h4 class="form-error">
+         <% errorsNamed.bio.forEach(function(bE){%>
+              <%= bE.msg %>
+          <% }) %>
+           </h4></div>
+        <% } %>
+      <!-- Question -->
+       <div class="field-group form-group">
+        <div class="field">
+          <label class="artist-edit-label">Why should we pick you? (min 1 char, max 500)</label>
+          <textarea id="ques" class="form-control-sm artist-edit input"  type="text" name="question" value="" data-autosize-input='{ "space": 40 }' rows="3" cols="50" placeholder="Your answer will be a factor in our decision to book your artist."><%= artistData.question %></textarea>
+        </div>
+      </div>
+      <div id="charNumQ" class="form-error"></div>
+       <!-- handle validation -->
+       <% if (errors) { %>
+       <div><h4 class="form-error">
+         <% errorsNamed.question.forEach(function(qE){%>
+              <%= qE.msg %>
+          <% }) %>
+           </h4></div>
+        <% } %>
+       <button class="artist-edit-submit btn-sm btn-info" style="float:right" type="submit">Submit</button>
+       <a class="btn-sm btn-secondary goback artist-edit-submit" href="/artists">Go back</a>
+      </form>
+    </div>
+  </div>    
+</div>
+
+<script>
+    $('textarea').on('keydown', function(e){
+    
+}).on('input', function(){
+    $(this).height(4);
+    var totalHeight = $(this).prop('scrollHeight') - parseInt($(this).css('padding-top')) - parseInt($(this).css('padding-bottom'));
+    $(this).height(totalHeight);
+});
+
+$('#desc').keyup(function(){
+  var max = 700;
+  var len = $(this).val().length;
+  if (len >= max){
+    $('#charNum').text('You have reached the limit')
+  } else {
+    var char = len;
+    $('#charNum').text(char + ' characters typed');
+  }
+  
+});
+
+$('#ques').keyup(function(){
+  var max = 500;
+  var len = $(this).val().length;
+  if (len >= max){
+    $('#charNumQ').text('You have reached the limit')
+  } else {
+    var char = len;
+    $('#charNumQ').text(char + ' characters typed');
+  }
+  
+});
+</script>
+
+
+<% include ../partials/scripts %>
+<% if (currentUser) {%>
+<% include ../partials/footer %>
+<% } %>

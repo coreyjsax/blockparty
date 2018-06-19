@@ -49,7 +49,7 @@ router.post("/register", function(req, res){
 //Handle Login Logic
 router.post("/login", passport.authenticate("local",
     {
-        successRedirect: "/artists",
+        successRedirect: "/",
         failureRedirect: "/",
         failureFlash: true,
         successFlash: "Welcome back!"

@@ -13,6 +13,7 @@ var ratingSchema = mongoose.Schema({
     comment: String, 
     artist: String,
     artist_name: String,
+    artist_avatar: String,
     genre: String,
     reviewed: {
       type: Date,

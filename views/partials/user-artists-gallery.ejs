@@ -1,12 +1,8 @@
 <% artists.forEach(function(artist){ %>
-  <div id="allartists" class="card text-white artist-card genre all-artists">
+  <div id="allartists" class="card text-white artist-card genre all-user-artists">
     <div class="side">
       <div class="card-header art-head">
        <H4 id="" class="card-title art-title">
-           <% if (artist.booked == "booked") { %>
-             <span class="booked-badge badge">booked </span>&nbsp;
-           <% } %>
-           
            <% if (artist.name.length > 22) {
                 var artistNewName = artist.name.slice(0,22);
                 var artistNewName = artistNewName + "...";
@@ -14,7 +10,7 @@
                   artistNewName = artist.name;
               }
            %>
-             
+           
            <%= artistNewName %>&nbsp;&nbsp;
         <span id="badge<%= artist.id %>" class="score-badge" >
          <script>
@@ -58,21 +54,18 @@
           getRatings();
            // test.innerText = score;
          </script>
-          </span>
-          
-       
-          </H4>
-      </div>    
-      <div class="embed-responsive embed-responsive-4by3">
+          </span></H4>
+      </div>
+      <div id="<%= artist.id %>-video" class="embed-responsive embed-responsive-4by3" >
         <!-- user should only need to enter youtube video id-->
+        
         <a href="/artists/<%= artist.id %>">
-             <img class="embed-responsive-item yt-pic" src="https://img.youtube.com/vi/<%= artist.video %>/0.jpg" >
+           <img class="embed-responsive-item yt-pic" src="https://img.youtube.com/vi/<%= artist.video %>/0.jpg" >
         </a>
       </div>
-      
       <div class="card-body">
-        <span class="genre"><%= artist.genre %></span>
-        <p class="card-text"><%= artist.question%></p>
+        <span class="genre <%= artist.id %>-hide"><%= artist.genre %></span>
+         <p class="card-text-user <%= artist.id %>-hide"><%= artist.question %></p>
          <% // date formatting for mongoose date
     var monthNames = [
       "Jan", "Feb", "Mar",
@@ -84,7 +77,7 @@
     var m = monthNames[artist.submitted.getMonth()];
     var y = artist.submitted.getFullYear();
     %>
-       
+      
        <div><a id="artist-card" class="btn-gallery btn btn-small btn-info btn-sm" href="/artists/<%= artist.id %>">
            <span class="font-size:15px;line-height:15px;margin-bottom;10px">listen</span>
          
@@ -95,8 +88,20 @@
     </div>
   </div>
 </div>
-
+  
+   <!-- -->
 <% }); %>
  
   
- 
+ <script>
+     
+     
+     $('textarea').on('keydown', function(e){
+    
+}).on('input', function(){
+    $(this).height(1);
+    var totalHeight = $(this).prop('scrollHeight') - parseInt($(this).css('padding-top')) - parseInt($(this).css('padding-bottom'));
+    $(this).height(totalHeight);
+});
+
+ </script>

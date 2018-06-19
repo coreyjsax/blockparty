@@ -19,7 +19,7 @@ passport.use(new FacebookStrategy({
   },
   
   function(accessToken, refreshToken, profile, done){
-    console.log(profile);
+    console.log(accessToken);
    // User.findOrCreate({ facebookId: profile.id, username: profile.name}, function(err, user){
     //  console.log('A new user from "%s" was inserted', user.facebookId);
    //   return done(err, user);
@@ -57,7 +57,7 @@ router.get('/facebook',
 router.get('/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect('/artists');
+    res.redirect('/');
 });
 
 //Twitter Auth// =================
@@ -101,7 +101,7 @@ router.get('/twitter',
 router.get('/twitter/callback',
   passport.authenticate('twitter', {failureRedirect: '/login'}),
   function(req, res){
-    res.redirect('/artists');
+    res.redirect('/');
 });
 
 //Google Auth// ==================
@@ -144,7 +144,7 @@ passport.authenticate('google', {scope: ['profile', 'email']}));
 router.get('/google/callback',
   passport.authenticate('google', {failureRedirect: '/login'}),
   function(req, res){
-    res.redirect('/artists');
+    res.redirect('/');
   });
 
 module.exports = router;

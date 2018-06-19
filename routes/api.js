@@ -28,35 +28,30 @@ router.get('/artists', (req, res) => {
 });
 
 //Get Artist Genre Tag Cloud 
-
-
-router.get('/genre', function(req, res){
-    var genre = [];
-    Artist.find({}, {genre:1}, function(err, genre){
-        if (err){
-            console.log(err);
-        }
-        var result = [...genre.reduce((mp, o) => {
-            if (!mp.has(o.genre)) mp.set(o.genre, Object.assign({ count: 0}, o));
-            mp.get(o.genre).count++;
-            return mp;
-        }, new Map).values()];
-        var count = [];
-        for (var i=0; i < result.length; i++){
-            count.push({"genre": result[i]._doc.genre, "count": result[i].count})
-        }
-        
-        res.json(count);
-    })
+router.get('/genre', (req, res) => {
+  var genre = [];
+  Artist.find({}, {genre:1}, (err, genre) => {
+    if (err){
+      console.log(err);
+    }
+    var result = [...genre.reduce((mp, o) => {
+      if (!mp.has(o.genre)) mp.set(o.genre, Object.assign({ count: 0}, o));
+      mp.get(o.genre).count++;
+      return mp;
+    }, new Map).values()];
+    var count = [];
+    for (var i=0; i < result.length; i++){
+      count.push({"genre": result[i]._doc.genre, "count": result[i].count})
+    }
+    res.json(count);
+  })
 })
-
-
 
 //Get Artist by Genre
 //==================
 
-router.get("/genre/:id", function(req, res){
-    Artist.find({'genre': req.params.id}, function (err, artist){
+router.get("/genre/:id", (req, res) => {
+    Artist.find({'genre': req.params.id}, (err, artist) => {
         if(err){
             res.redirect('/artists');
         } 
@@ -90,7 +85,6 @@ router.get('/artists/:id/ratings', (req, res) => {
         });
     });
 });
-
 
 /* router.get('/facebookdata/:id', (req, res) => {
     
@@ -154,7 +148,6 @@ router.get('/users/:id/ratings', (req, res) => {
             if (err) {
                 res.send(err);
             }
-            
             res.json(rating);
         });
     });
@@ -185,7 +178,7 @@ router.get('/users/:id/inbox', (req, res) => {
    var artistUrl = 'https://block-party-coreyjsax.c9users.io/api/artists';
    var userRatings = 'https://block-party-coreyjsax.c9users.io/api/users/'+ user + '/ratings';
    request(userRatings)
-   .then(function(response){
+   .then((response) => {
      var reviewed = JSON.parse(response);
      return reviewed;
    }).then(function(reviewed){
@@ -194,18 +187,18 @@ router.get('/users/:id/inbox', (req, res) => {
            userReviewed.push(id);
        }
        return userReviewed;
-   }).then(function(userReviewed){
+   }).then((userReviewed) => {
        request(artistUrl)
-       .then(function(res2){
+       .then((res2) => {
+       //    console.log(userReviewed)
            var artists = JSON.parse(res2);
-           var newList = artists.filter(function( o){
+           var artists = artists.filter(( o) => {
                return userReviewed.indexOf(o._id) === -1;
            })
-           res.json(newList);
+           res.json(artists);
        });
    });
 });
-
 
 
 //Loop through artists and get ratings, then average ratings and organize by artist
@@ -221,10 +214,10 @@ router.get('/leaderboard-test', (req, res) => {
    var reviewJSON = [];
    
    request(artistUrl)
-   .then(function(response){
+   .then((response) => {
        var artists = JSON.parse(response);
        return artists;
-   }).then(function(artists){
+   }).then((artists) => {
        for (var i = 0; i < artists.length; i++){
            var id = artists[i]._id;
            var name = artists[i].name;
@@ -238,12 +231,12 @@ router.get('/leaderboard-test', (req, res) => {
            });
        }
        return artistJSON;
-   }).then(function(artistJSON){
+   }).then((artistJSON) => {
       request(ratingsUrl)
-      .then(function(response){
+      .then((response) => {
           var ratings = JSON.parse(response);
           return ratings;
-      }).then(function(ratings){
+      }).then((ratings) => {
           for (var i = 0; i < ratings.length; i++){
               var id = ratings[i].artist;
               var artist_name = ratings[i].artist_name;
@@ -259,12 +252,12 @@ router.get('/leaderboard-test', (req, res) => {
               });
           }
           return reviewJSON;
-      }).then(function(reviewJSON){
+      }).then((reviewJSON) => {
          var hash = Object.create(null);
-         artistJSON.concat(reviewJSON).forEach(function(obj){
+         artistJSON.concat(reviewJSON).forEach((obj) => {
              hash[obj.id] = Object.assign(hash[obj.id] || {}, obj);
          });
-         var final = Object.keys(hash).map(function(key){
+         var final = Object.keys(hash).map((key) => {
              return(hash[key]);
          });
          res.json(final);
@@ -280,12 +273,12 @@ router.get("/leaderboard", (req, res) =>{
     reviewJSON = [];
     var rtn=[];
     request(ratingsUrl)
-    .then(function(response){
+    .then((response) => {
         var ratings = JSON.parse(response);
         return ratings;
-    }).then(function(ratings){
+    }).then((ratings) => {
         var newRatings = d3.nest()
-        .key(function(d){return d.artist_name;})
+        .key((d) => {return d.artist_name;})
         .entries(ratings);
         res.json(newRatings);
     })
@@ -296,10 +289,10 @@ router.get("/raterank", (req, res) => {
     var rankList = [];
     var leaderboardUrl = 'https://block-party-coreyjsax.c9users.io/api/leaderboard';
     request(leaderboardUrl)
-    .then(function(response){
+    .then((response) => {
         var leaderboard = JSON.parse(response);
         return leaderboard;
-    }).then(function(leaderboard){
+    }).then((leaderboard) => {
         for (var i=0; i < leaderboard.length; i++){
             var score = 0;
             var tmp = [];
@@ -311,11 +304,11 @@ router.get("/raterank", (req, res) => {
                 score += leaderboard[i].values[j].score;
                 tmp.push(leaderboard[i].values[j].score);
             }
-          weightedScore.one = tmp.filter(function(x){return x==1}).length;
-          weightedScore.two = tmp.filter(function(x){return x==2}).length;
-          weightedScore.three = tmp.filter(function(x){return x==3}).length;
-          weightedScore.four = tmp.filter(function(x){return x==4}).length;
-          weightedScore.five = tmp.filter(function(x){return x==5}).length;
+          weightedScore.one = tmp.filter((x) => {return x==1}).length;
+          weightedScore.two = tmp.filter((x) => {return x==2}).length;
+          weightedScore.three = tmp.filter((x) => {return x==3}).length;
+          weightedScore.four = tmp.filter((x) => {return x==4}).length;
+          weightedScore.five = tmp.filter((x) => {return x==5}).length;
           scoreWeighted = ((5 * weightedScore.five) + (4 * weightedScore.four) + (3 * weightedScore.three) + (2 * weightedScore.two) + (1 * weightedScore.one)) / (weightedScore.five + weightedScore.four + weightedScore.three + weightedScore.two + weightedScore.one);
        
           //bayesian average for number of votes
