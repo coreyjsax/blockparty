@@ -5,7 +5,7 @@
     var objs = [];
     function getRank(){
        var html='';
-       fetch('https://block-party-coreyjsax.c9users.io/api/leaderboard')
+       fetch('/api/leaderboard')
        .then(function(res){
           data = JSON.parse(res);
        }).then(function(data){

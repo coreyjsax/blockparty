@@ -28,7 +28,7 @@
          <script>
            function getRatings(){
             var totalScore;
-            fetch('https://block-party-coreyjsax.c9users.io/api/artists/<%= artist.id %>/ratings')
+            fetch('/api/artists/<%= artist.id %>/ratings')
             .then(function(res){
               return res.json()
             }).then(
