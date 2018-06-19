@@ -52,7 +52,7 @@ passport.use(new FacebookStrategy({
     
 
 router.get('/facebook',
-  passport.authenticate('facebook', {scope : ["email", "user_location", "user_hometown", "user_birthday", 'public_profile'] }));
+  passport.authenticate('facebook', {scope : ["email", 'public_profile'] }));
 
 router.get('/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
