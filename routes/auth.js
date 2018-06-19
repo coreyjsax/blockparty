@@ -14,7 +14,7 @@ const FACEBOOK_APP_SECRET = '3445fe34a1011da53134d86800b35b08';
 passport.use(new FacebookStrategy({
   clientID: FACEBOOK_APP_ID,
   clientSecret: FACEBOOK_APP_SECRET,
-  callbackURL: 'https://nameless-shore-98809.herokuapp.com/auth/facebook/callback',
+  callbackURL: 'https://blockparty.pizzaluce.com/auth/facebook/callback',
   profileFields: ['id', 'displayName','gender', 'emails', 'picture.width(200).height(200)']
   },
   
@@ -66,7 +66,7 @@ const TwitterStrategy = require('passport-twitter').Strategy;
 passport.use(new TwitterStrategy({
   consumerKey: "3RAOUsNP8u05iaKxgXPKS0nmj",
   consumerSecret: "AimO7N3PXnsZsZiCN0yjbwAZiwvrVIBdjUj4BQGLcb1F46jlIh",
-  callbackURL: 'https://nameless-shore-98809.herokuapp.com/auth/twitter/callback',
+  callbackURL: 'https://blockparty.pizzaluce.com/auth/twitter/callback',
   includeEmail:true
 },
   function(accessToken, refreshToken, profile, done) {
@@ -108,9 +108,9 @@ router.get('/twitter/callback',
 var GoogleStrategy = require('passport-google-oauth2').Strategy;
 
  passport.use(new GoogleStrategy({
-  clientID: '787307841572-uolj1du5brlcc55crdj3ho78i9ffrdrf.apps.googleusercontent.com',
-  clientSecret: 'tgZOlwFMa7e79-x2ajowus-p',
-  callbackURL: 'https://nameless-shore-98809.herokuapp.com/auth/google/callback',
+  clientID: '787307841572-m6783b7ajcftcq2itpqoebnkto5ocidf.apps.googleusercontent.com',
+  clientSecret: 'sE7kEjYS4bouqMb4Z586dwW4',
+  callbackURL: 'https://blockparty.pizzaluce.com/auth/google/callback',
   passReqToCallback: true
 },
 function(request, accessToken, refreshToken, profile, done){
